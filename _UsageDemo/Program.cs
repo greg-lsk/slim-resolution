@@ -1,4 +1,5 @@
 ﻿using _UsageDemo.Services;
+
 using SlimResolution.Core;
 using SlimResolution.Extensions.MicrosoftDI;
 
@@ -11,8 +12,7 @@ var host = Host.CreateDefaultBuilder(args)
                {
                    services.AddScoped<IPseudoLog, PseudoLog>();
 
-                   services.AddComposer()
-                           .AddResolutionContext();
+                   services.AddSlimResolution();
 
                    services.AddSingleton<IResolutionMetadata<EvaluationLogging>, EvaluationLoggingMetadata>(provider =>
                    {
