@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Extensions/">
+    <Project Path="SlimResolution.Extensions.Microsoft/SlimResolution.Extensions.Microsoft.csproj" />
+  </Folder>
+  <Project Path="SlimResolution.Core/SlimResolution.Core.csproj" />
+  <Project Path="_UsageDemo/_UsageDemo.csproj" />
+</Solution>

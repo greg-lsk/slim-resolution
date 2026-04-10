@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	<LangVersion>Latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include=".src\.Internals\Composer.cs" />
+    <Compile Include=".src\ExtensionHelpers\ExtensionContext.cs" />
+    <Compile Include=".src\IComposer.cs" />
+    <Compile Include=".src\IResolutionContext.cs" />
+    <Compile Include=".src\IResolutionMetadata.cs" />
+    <Compile Include=".src\Resolution.cs" />
+    <Compile Include=".src\ResolveUsingAttribute.cs" />
+  </ItemGroup>
+
+</Project>
