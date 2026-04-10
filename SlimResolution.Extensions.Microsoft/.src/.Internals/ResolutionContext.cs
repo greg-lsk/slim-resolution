@@ -2,7 +2,7 @@
 using SlimResolution.Core;
 
 
-namespace SlimResolution.Extensions.Microsoft.Internals;
+namespace SlimResolution.Extensions.MicrosoftDI.Internals;
 
 internal class ResolutionContext : IResolutionContext
 {

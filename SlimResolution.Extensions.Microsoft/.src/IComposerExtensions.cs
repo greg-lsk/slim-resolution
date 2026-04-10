@@ -4,7 +4,7 @@ using SlimResolution.Core;
 using SlimResolution.Core.ExtensionHelpers;
 
 
-namespace SlimResolution.Extensions.Microsoft;
+namespace SlimResolution.Extensions.MicrosoftDI;
 
 public static class IComposerExtensions
 {

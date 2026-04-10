@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
 using SlimResolution.Core;
-using SlimResolution.Extensions.Microsoft.Internals;
+using SlimResolution.Extensions.MicrosoftDI.Internals;
 
 
-namespace SlimResolution.Extensions.Microsoft;
+namespace SlimResolution.Extensions.MicrosoftDI;
 
 public static class IResolutionContextExtensions
 {

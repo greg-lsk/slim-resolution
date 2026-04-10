@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SlimResolution.Extensions.Microsoft\SlimResolution.Extensions.Microsoft.csproj" />
+    <ProjectReference Include="..\SlimResolution.Extensions.Microsoft\SlimResolution.Extensions.MicrosoftDI.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using _UsageDemo.Services;
 using SlimResolution.Core;
-using SlimResolution.Extensions.Microsoft;
+using SlimResolution.Extensions.MicrosoftDI;
 
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
