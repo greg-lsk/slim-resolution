@@ -1,6 +1,4 @@
-﻿using System;
-
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 using SlimResolution.Core;
 using SlimResolution.Extensions.MicrosoftDI.Internals;
@@ -14,10 +12,5 @@ public static class RegistrationHelper
         where TService : notnull
     {
         return (context as ResolutionContext).ProviderSelector().GetRequiredService<TService>();
-    }
-
-    internal static ResolutionContext CreateContext(Func<IServiceProvider> providerSelector)
-    {
-        return new(providerSelector);
     }
 }

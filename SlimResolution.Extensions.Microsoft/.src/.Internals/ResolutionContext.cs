@@ -13,4 +13,8 @@ internal class ResolutionContext : IResolutionContext
     {
         ProviderSelector = providerSelector;
     }
+    internal static ResolutionContext Create(Func<IServiceProvider> providerSelector)
+    {
+        return new(providerSelector);
+    }
 }
