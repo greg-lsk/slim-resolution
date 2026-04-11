@@ -3,7 +3,6 @@ using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
 
-using System.Linq;
 
 
 namespace SlimResolution.Core.MetadataRegistration;
@@ -36,39 +35,64 @@ public class RegistrationContext
         {
             if (type.IsValueType || type.IsAbstract || type.IsInterface) continue;
 
-            var targetType = type.GetInterfaces()
-                                 .FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IResolutionMetadata<>));
+            var metadataInterface = TryGetMetadataIResolutionInterface(reflectedType);
+            if (metadataInterface is null) continue;
 
-            if (targetType is null) continue;
+            List<Type> resolutionTypes = [];
+            List<Delegate> resolutionDelegates = [];
+            AnalyzeMetadataProperties(reflectedType, resolutionTypes, methodInfo, resolutionDelegates);
 
             var dependencies = Dependencies(type);
             var ctor = type.GetConstructor([.. dependencies]) ?? throw new MissingMethodException("ctor not found");
 
-            var args = dependencies
-                .Select(t => t.GetGenericArguments()[0])
-                .Select(t => methodInfo.MakeGenericMethod(t).CreateDelegate(typeof(Resolution<>).MakeGenericType(t)));
-
-            action(type, targetType, () => ctor.Invoke([.. args]) ?? throw new InvalidDataException("couldn't invoke ctor"));
+            action(metadataInterface, () => ctor.Invoke([.. resolutionDelegates]) 
+                ?? throw new InvalidDataException("couldn't invoke ctor"));
         }
     }
 
-    private IEnumerable<Type> Dependencies(Type concreateType)
+
+    private void AnalyzeMetadataProperties(Type concreteMetadata,
+                                           List<Type> resolutionTypes,
+                                           MethodInfo methodInfo,
+                                           List<Delegate> resolutionDelegates)
     {
         var binding = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
-        var properties = concreateType.GetProperties(binding);
 
-        for (int i = 0; i < properties.Length; i++)
+        foreach(var property in concreteMetadata.GetProperties(binding))
         {
-            if (PropertyIsResolution(properties[i]))
+            if (PropertyIsResolution(property))
             {
-                yield return properties[i].PropertyType;
+                resolutionTypes.Add(property.PropertyType);
+                resolutionDelegates.Add(CreateResolutionDelegate(property.PropertyType, methodInfo));
             }
         }
+    }
+
+    private Type? TryGetMetadataIResolutionInterface(Type reflectedType)
+    {
+        foreach(var implementedInterface in reflectedType.GetInterfaces())
+        {
+            if (implementedInterface.IsGenericType 
+                && implementedInterface.GetGenericTypeDefinition() == typeof(IResolutionMetadata<>))
+            {
+                return implementedInterface;
+            }
+        }
+        return null;
     }
 
     private bool PropertyIsResolution(PropertyInfo info)
     {
         return info.PropertyType.IsGenericType
                && info.PropertyType.GetGenericTypeDefinition() == typeof(Resolution<>);
+    }
+
+    private Delegate CreateResolutionDelegate(Type resolutionType, MethodInfo methodInfo)
+    {
+        var serviceType = resolutionType.GetGenericArguments()[0];
+
+        return methodInfo.MakeGenericMethod(serviceType)
+                         .CreateDelegate(typeof(Resolution<>)
+                         .MakeGenericType(serviceType));
     }
 }
