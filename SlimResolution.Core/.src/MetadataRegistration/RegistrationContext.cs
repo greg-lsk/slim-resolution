@@ -10,6 +10,7 @@ public class RegistrationContext
 {
     private readonly static string _baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
+
     public static RegistrationContext Instance => new();
 
 
