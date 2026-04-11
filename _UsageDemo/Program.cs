@@ -13,11 +13,6 @@ var host = Host.CreateDefaultBuilder(args)
                    services.AddScoped<IPseudoLog, PseudoLog>();
 
                    services.AddSlimResolution();
-
-                   services.AddSingleton<IResolutionMetadata<EvaluationLogging>, EvaluationLoggingMetadata>(provider =>
-                   {
-                        return new(RegistrationHelper.GenericResolution<IPseudoLog>);
-                   });
                })
                .Build();
 

@@ -8,7 +8,7 @@ internal class EvaluationLoggingMetadata : IResolutionMetadata<EvaluationLogging
     internal Resolution<IPseudoLog> LoggerResolution { get; }
 
 
-    internal EvaluationLoggingMetadata(
+    public EvaluationLoggingMetadata(
         Resolution<IPseudoLog> loggerResolution)
     {
         LoggerResolution = loggerResolution;
