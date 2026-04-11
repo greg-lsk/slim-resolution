@@ -21,7 +21,7 @@ public static class Registration
                 });
 
         var registrationContext = RegistrationContext.Instance;
-        registrationContext.OnHitRun
+        registrationContext.RegisterMetadata
         (
             typeof(RegistrationHelper).GetMethod
             (
@@ -29,7 +29,7 @@ public static class Registration
                 BindingFlags.Public | BindingFlags.Static
             ),
 
-            (c, i, f) => services.AddSingleton(i, provider => f())
+            (i, f) => services.AddSingleton(i, provider => f())
         );
 
         return services;

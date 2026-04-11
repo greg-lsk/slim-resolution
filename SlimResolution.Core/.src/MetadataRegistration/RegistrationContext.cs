@@ -4,36 +4,36 @@ using System.Reflection;
 using System.Collections.Generic;
 
 
-
 namespace SlimResolution.Core.MetadataRegistration;
 
 public class RegistrationContext
 {
+    private readonly static string _baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
     public static RegistrationContext Instance => new();
 
 
-    public void OnHitRun(MethodInfo methodInfo, Action<Type, Type, Func<object>> action)
+    public void RegisterMetadata(MethodInfo methodInfo, Action<Type, Func<object>> action)
     {
-        var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-        var dllFiles = Directory.GetFiles(baseDir, "*.dll");
+        var dllFiles = Directory.GetFiles(_baseDirectory, "*.dll");
 
-        for (int i = 0; i < dllFiles.Length; i++)
+        foreach(var dllFile in dllFiles)
         {
-            var assembly = Assembly.LoadFrom(dllFiles[i]);
+            var assembly = Assembly.LoadFrom(dllFile);
             var assemblyTypes = assembly.GetTypes();
 
-            UpdateMetadataInfo(assemblyTypes, methodInfo, action);
+            AnalyzeAssemblyTypes(assemblyTypes, methodInfo, action);
         }
     }
 
 
-    private void UpdateMetadataInfo(IEnumerable<Type> types,
-                                    MethodInfo methodInfo,
-                                    Action<Type, Type, Func<object>> action)
+    private void AnalyzeAssemblyTypes(IEnumerable<Type> types,
+                                      MethodInfo methodInfo,
+                                      Action<Type, Func<object>> action)
     {
-        foreach(var type in types)
+        foreach(var reflectedType in types)
         {
-            if (type.IsValueType || type.IsAbstract || type.IsInterface) continue;
+            if (reflectedType.IsValueType || reflectedType.IsAbstract || reflectedType.IsInterface) continue;
 
             var metadataInterface = TryGetMetadataIResolutionInterface(reflectedType);
             if (metadataInterface is null) continue;
@@ -41,10 +41,10 @@ public class RegistrationContext
             List<Type> resolutionTypes = [];
             List<Delegate> resolutionDelegates = [];
             AnalyzeMetadataProperties(reflectedType, resolutionTypes, methodInfo, resolutionDelegates);
-
-            var dependencies = Dependencies(type);
-            var ctor = type.GetConstructor([.. dependencies]) ?? throw new MissingMethodException("ctor not found");
-
+            
+            var ctor = reflectedType.GetConstructor([.. resolutionTypes]) 
+                ?? throw new MissingMethodException("ctor not found");
+            
             action(metadataInterface, () => ctor.Invoke([.. resolutionDelegates]) 
                 ?? throw new InvalidDataException("couldn't invoke ctor"));
         }
