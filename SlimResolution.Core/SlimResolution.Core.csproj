@@ -12,6 +12,7 @@
     <Compile Include=".src\IComposer.cs" />
     <Compile Include=".src\IResolutionContext.cs" />
     <Compile Include=".src\IResolutionMetadata.cs" />
+    <Compile Include=".src\MetadataRegistration\IServiceResolver.cs" />
     <Compile Include=".src\MetadataRegistration\RegistrationContext.cs" />
     <Compile Include=".src\Resolution.cs" />
     <Compile Include=".src\ResolveUsingAttribute.cs" />

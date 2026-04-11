@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Linq.Expressions;
 using System.Collections.Generic;
 
 
@@ -10,11 +11,20 @@ public class RegistrationContext
 {
     private readonly static string _baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
+    private readonly IServiceResolver _serviceResolver;
 
-    public static RegistrationContext Instance => new();
+
+    private RegistrationContext(IServiceResolver serviceResolver)
+    {
+        _serviceResolver = serviceResolver;
+    }
+    public static RegistrationContext Create(IServiceResolver serviceResolver)
+    {
+        return new(serviceResolver);
+    }
 
 
-    public void RegisterMetadata(MethodInfo methodInfo, Action<Type, Func<object>> action)
+    public void RegisterMetadata(Action<Type, Func<object>> action)
     {
         var dllFiles = Directory.GetFiles(_baseDirectory, "*.dll");
 
@@ -23,13 +33,12 @@ public class RegistrationContext
             var assembly = Assembly.LoadFrom(dllFile);
             var assemblyTypes = assembly.GetTypes();
 
-            AnalyzeAssemblyTypes(assemblyTypes, methodInfo, action);
+            AnalyzeAssemblyTypes(assemblyTypes, action);
         }
     }
 
 
     private void AnalyzeAssemblyTypes(IEnumerable<Type> types,
-                                      MethodInfo methodInfo,
                                       Action<Type, Func<object>> action)
     {
         foreach(var reflectedType in types)
@@ -41,7 +50,7 @@ public class RegistrationContext
 
             List<Type> resolutionTypes = [];
             List<Delegate> resolutionDelegates = [];
-            AnalyzeMetadataProperties(reflectedType, resolutionTypes, methodInfo, resolutionDelegates);
+            AnalyzeMetadataProperties(reflectedType, resolutionTypes, resolutionDelegates);
             
             var ctor = reflectedType.GetConstructor([.. resolutionTypes]) 
                 ?? throw new MissingMethodException("ctor not found");
@@ -54,7 +63,6 @@ public class RegistrationContext
 
     private void AnalyzeMetadataProperties(Type concreteMetadata,
                                            List<Type> resolutionTypes,
-                                           MethodInfo methodInfo,
                                            List<Delegate> resolutionDelegates)
     {
         var binding = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
@@ -64,12 +72,12 @@ public class RegistrationContext
             if (PropertyIsResolution(property))
             {
                 resolutionTypes.Add(property.PropertyType);
-                resolutionDelegates.Add(CreateResolutionDelegate(property.PropertyType, methodInfo));
+                resolutionDelegates.Add(CreateResolutionDelegate(property.PropertyType));
             }
         }
     }
 
-    private Type? TryGetMetadataIResolutionInterface(Type reflectedType)
+    private static Type? TryGetMetadataIResolutionInterface(Type reflectedType)
     {
         foreach(var implementedInterface in reflectedType.GetInterfaces())
         {
@@ -82,18 +90,26 @@ public class RegistrationContext
         return null;
     }
 
-    private bool PropertyIsResolution(PropertyInfo info)
+    private static bool PropertyIsResolution(PropertyInfo info)
     {
         return info.PropertyType.IsGenericType
                && info.PropertyType.GetGenericTypeDefinition() == typeof(Resolution<>);
     }
 
-    private Delegate CreateResolutionDelegate(Type resolutionType, MethodInfo methodInfo)
+    private Delegate CreateResolutionDelegate(Type resolutionType)
     {
         var serviceType = resolutionType.GetGenericArguments()[0];
+        var methodInfo = typeof(IServiceResolver).GetMethod(nameof(IServiceResolver.Resolve))
+                                                 .MakeGenericMethod(serviceType);
 
-        return methodInfo.MakeGenericMethod(serviceType)
-                         .CreateDelegate(typeof(Resolution<>)
-                         .MakeGenericType(serviceType));
+        var contextParam = Expression.Parameter(typeof(IResolutionContext), "context");
+        var resolverConst = Expression.Constant(_serviceResolver, typeof(IServiceResolver));
+
+        var call = Expression.Call(resolverConst, methodInfo, contextParam);
+
+        var lambdaType = typeof(Resolution<>).MakeGenericType(serviceType);
+        var lambda = Expression.Lambda(lambdaType, call, contextParam);
+
+        return lambda.Compile();
     }
 }
