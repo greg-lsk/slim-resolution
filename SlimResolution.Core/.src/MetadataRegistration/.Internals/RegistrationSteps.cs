@@ -34,9 +34,9 @@ internal static class RegistrationSteps
 
     internal static void RunRegistration(this IEnumerable<PropertyInfo> propertyInfos,
                                          in MetadataInfo metadataInfo,
-                                         ResolutionDelegateBuilder delegateBuilder,
-                                         Registration registration,
-                                         Resolution resolution)
+                                         Resolution resolution,
+                                         Registration registration,                                 
+                                         ResolutionDelegateBuilder delegateBuilder)
     {
         List<Type> resolutionTypes = [];
         List<Delegate> resolutionDelegates = [];

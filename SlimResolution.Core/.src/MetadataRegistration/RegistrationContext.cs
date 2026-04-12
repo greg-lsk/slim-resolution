@@ -42,9 +42,9 @@ public class RegistrationContext
                     {
                         metadataInfo.GetResolutionProperties()
                                     .RunRegistration(in metadataInfo,
-                                                     _delegateBuiler,
+                                                     _resolution,
                                                      _registration,
-                                                     _resolution);
+                                                     _delegateBuiler);
                     });
         }
     }
