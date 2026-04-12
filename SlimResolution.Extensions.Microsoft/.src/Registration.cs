@@ -17,10 +17,9 @@ public static class Registration
         var serviveResolver = ServiceResolver.Instance;
         var registrationContext = RegistrationContext.Create
         (
-            serviveResolver,
-            (i, f) => services.AddSingleton(i, provider => f())
+            (i, f) => services.AddSingleton(i, provider => f()),
+            serviveResolver
         );
-
 
         services.AddSingleton(typeof(IComposer<>), extensionContext.GetComposerType())
                 .AddSingleton<IResolutionContext, ResolutionContext>(provider =>

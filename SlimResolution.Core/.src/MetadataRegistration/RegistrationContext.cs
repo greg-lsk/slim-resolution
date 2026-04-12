@@ -3,23 +3,27 @@ using System.IO;
 using System.Reflection;
 
 using SlimResolution.Core.MetadataRegistration.Internals;
+using SlimResolution.Core.MetadataRegistration.Internals.Utils;
 
 
 namespace SlimResolution.Core.MetadataRegistration;
 
 public class RegistrationContext
 {
-    private readonly IServiceResolver _propertyResolver;
     private readonly Registration _registration;
+    private readonly IServiceResolver _propertyResolver;
+    private readonly ResolutionDelegateBuilder _delegateBuiler;
 
-    private RegistrationContext(IServiceResolver propertyResolver, Registration registration)
+
+    private RegistrationContext(Registration registration, IServiceResolver propertyResolver)
     {
         _propertyResolver = propertyResolver;
         _registration = registration;
+        _delegateBuiler = ResolutionDelegateBuilder.Instance;
     }
-    public static RegistrationContext Create(IServiceResolver propertyResolver, Registration registration)
+    public static RegistrationContext Create(Registration registration, IServiceResolver propertyResolver)
     {
-        return new(propertyResolver, registration);
+        return new(registration, propertyResolver);
     }
 
 
@@ -38,9 +42,12 @@ public class RegistrationContext
                     {
                         var binding = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
-                        metadataInfo.ConcreteType.GetProperties(binding)
-                                                 .RunRegistration(in metadataInfo, _registration, _propertyResolver);
-
+                        var metadataType = metadataInfo.ConcreteType;
+                        metadataType.GetProperties(binding)
+                                    .RunRegistration(in metadataInfo,
+                                                     _delegateBuiler,
+                                                     _registration,
+                                                     _propertyResolver);
                     });
         }
     }

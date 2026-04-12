@@ -34,14 +34,13 @@ internal static class RegistrationSteps
 
     internal static void RunRegistration(this IEnumerable<PropertyInfo> propertyInfos,
                                          in (Type InterfaceType, Type ConcreteType) metadataInfo,
+                                         ResolutionDelegateBuilder delegateBuilder,
                                          Registration registration,
                                          IServiceResolver resolver)
     {
         List<Type> resolutionTypes = [];
         List<Delegate> resolutionDelegates = [];
         
-        var delegateBuilder = ResolutionDelegateBuilder.Instance;
-
         foreach (var info in propertyInfos)
         {
             if (!info.IsForResolutionDelegate()) continue;
