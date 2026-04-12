@@ -9,20 +9,28 @@ internal readonly struct ResolutionDelegateBuilder
     internal static ResolutionDelegateBuilder Instance => new();
 
 
-    internal Delegate BuildDelegate(Type type, IServiceResolver resolver)
+    internal Delegate BuildDelegate(Type type, Resolution resolutionDelegate)
     {
         var serviceType = type.GetGenericArguments()[0];
-        var methodInfo = typeof(IServiceResolver).GetMethod(nameof(IServiceResolver.Resolve))
-                                                 .MakeGenericMethod(serviceType);
-
 
         var contextParam = Expression.Parameter(typeof(IResolutionContext), "context");
-        var resolverConst = Expression.Constant(resolver, typeof(IServiceResolver));
 
-        var call = Expression.Call(resolverConst, methodInfo, contextParam);
+        var serviceTypeConst = Expression.Constant(serviceType, typeof(Type));
+        var resolutionConst = Expression.Constant(resolutionDelegate, typeof(Resolution));
+
+
+        var invokeResolution = Expression.Call
+        (
+            resolutionConst,
+            typeof(Resolution).GetMethod(nameof(Resolution.Invoke)), 
+            serviceTypeConst, 
+            contextParam
+        );
+
+        var converted = Expression.Convert(invokeResolution, serviceType);
 
         var lambdaType = typeof(Resolution<>).MakeGenericType(serviceType);
-        var lambda = Expression.Lambda(lambdaType, call, contextParam);
+        var lambda = Expression.Lambda(lambdaType, converted, contextParam);
 
         return lambda.Compile();
     }

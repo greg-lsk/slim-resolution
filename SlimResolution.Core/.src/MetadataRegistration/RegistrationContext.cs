@@ -11,19 +11,19 @@ namespace SlimResolution.Core.MetadataRegistration;
 public class RegistrationContext
 {
     private readonly Registration _registration;
-    private readonly IServiceResolver _propertyResolver;
+    private readonly Resolution _resolution;
     private readonly ResolutionDelegateBuilder _delegateBuiler;
 
 
-    private RegistrationContext(Registration registration, IServiceResolver propertyResolver)
+    private RegistrationContext(Registration registration, Resolution resolution)
     {
-        _propertyResolver = propertyResolver;
+        _resolution = resolution;
         _registration = registration;
         _delegateBuiler = ResolutionDelegateBuilder.Instance;
     }
-    public static RegistrationContext Create(Registration registration, IServiceResolver propertyResolver)
+    public static RegistrationContext Create(Registration registration, Resolution resolution)
     {
-        return new(registration, propertyResolver);
+        return new(registration, resolution);
     }
 
 
@@ -47,7 +47,7 @@ public class RegistrationContext
                                     .RunRegistration(in metadataInfo,
                                                      _delegateBuiler,
                                                      _registration,
-                                                     _propertyResolver);
+                                                     _resolution);
                     });
         }
     }

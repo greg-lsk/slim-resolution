@@ -17,8 +17,7 @@
     <Compile Include=".src\MetadataRegistration\.Internals\Utils\ResolutionDelegateBuilder.cs" />
     <Compile Include=".src\MetadataRegistration\.Internals\Utils\TypeExtensions.cs" />
     <Compile Include=".src\MetadataRegistration\.Internals\RegistrationSteps.cs" />
-    <Compile Include=".src\MetadataRegistration\IServiceResolver.cs" />
-    <Compile Include=".src\MetadataRegistration\Registration.cs" />
+    <Compile Include=".src\MetadataRegistration\Delegates.cs" />
     <Compile Include=".src\MetadataRegistration\RegistrationContext.cs" />
     <Compile Include=".src\Resolution.cs" />
     <Compile Include=".src\ResolveUsingAttribute.cs" />

@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <Compile Include=".src\.Internals\ResolutionContext.cs" />
-    <Compile Include=".src\.Internals\ServiceResolver.cs" />
     <Compile Include=".src\IComposerExtensions.cs" />
     <Compile Include=".src\Registration.cs" />
   </ItemGroup>

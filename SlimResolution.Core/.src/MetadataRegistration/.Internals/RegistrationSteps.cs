@@ -36,7 +36,7 @@ internal static class RegistrationSteps
                                          in (Type InterfaceType, Type ConcreteType) metadataInfo,
                                          ResolutionDelegateBuilder delegateBuilder,
                                          Registration registration,
-                                         IServiceResolver resolver)
+                                         Resolution resolution)
     {
         List<Type> resolutionTypes = [];
         List<Delegate> resolutionDelegates = [];
@@ -47,7 +47,7 @@ internal static class RegistrationSteps
 
             resolutionTypes.Add(info.PropertyType);
 
-            var resolutionDelegate = delegateBuilder.BuildDelegate(info.PropertyType, resolver);
+            var resolutionDelegate = delegateBuilder.BuildDelegate(info.PropertyType, resolution);
             resolutionDelegates.Add(resolutionDelegate);
         }
 

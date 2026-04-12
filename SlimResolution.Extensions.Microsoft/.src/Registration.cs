@@ -14,11 +14,10 @@ public static class Registration
     {
         var extensionContext = ExtensionContext.Instance;
 
-        var serviveResolver = ServiceResolver.Instance;
         var registrationContext = RegistrationContext.Create
         (
             (i, f) => services.AddSingleton(i, provider => f()),
-            serviveResolver
+            (s, c) => (c as ResolutionContext).ProviderSelector().GetService(s)
         );
 
         services.AddSingleton(typeof(IComposer<>), extensionContext.GetComposerType())
