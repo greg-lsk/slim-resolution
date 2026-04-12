@@ -15,7 +15,11 @@ public static class Registration
         var extensionContext = ExtensionContext.Instance;
 
         var serviveResolver = ServiceResolver.Instance;
-        var registrationContext = RegistrationContext.Create(serviveResolver);
+        var registrationContext = RegistrationContext.Create
+        (
+            serviveResolver,
+            (i, f) => services.AddSingleton(i, provider => f())
+        );
 
 
         services.AddSingleton(typeof(IComposer<>), extensionContext.GetComposerType())
@@ -24,7 +28,7 @@ public static class Registration
                     return new(() => provider);
                 });
 
-        registrationContext.RegisterMetadata((i, f) => services.AddSingleton(i, provider => f()));
+        registrationContext.RegisterMetadata();
 
         return services;
     }
