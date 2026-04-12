@@ -9,9 +9,9 @@ namespace SlimResolution.Core.MetadataRegistration.Internals;
 
 internal static class RegistrationSteps
 {
-    internal static IEnumerable<(Type InterfaceType, Type ConcreteType)> FilterByMetadata(this IEnumerable<Type> types)
+    internal static IEnumerable<MetadataInfo> FilterByMetadata(this IEnumerable<Type> types)
     {
-        List<(Type, Type)> typesList = [];
+        List<MetadataInfo> typesList = [];
 
         foreach (var type in types)
         {
@@ -20,20 +20,20 @@ internal static class RegistrationSteps
             var closedGenericInterfaceType = type.TryGetClosedGenericInterface(typeof(IResolutionMetadata<>));
             if (closedGenericInterfaceType is null) continue;
 
-            typesList.Add((closedGenericInterfaceType, type));
+            typesList.Add(MetadataInfo.Create(closedGenericInterfaceType, type));
         }
 
         return typesList;
     }
 
-    internal static void OnEach(this IEnumerable<(Type InterfaceType, Type ConcreteType)> metadataInfos,
+    internal static void OnEach(this IEnumerable<MetadataInfo> metadataInfos,
                                 Register registerDelegate)
     {
         foreach (var metadataInfo in metadataInfos) registerDelegate(metadataInfo);
     }
 
     internal static void RunRegistration(this IEnumerable<PropertyInfo> propertyInfos,
-                                         in (Type InterfaceType, Type ConcreteType) metadataInfo,
+                                         in MetadataInfo metadataInfo,
                                          ResolutionDelegateBuilder delegateBuilder,
                                          Registration registration,
                                          Resolution resolution)

@@ -40,10 +40,7 @@ public class RegistrationContext
                     .FilterByMetadata()
                     .OnEach((in metadataInfo) => 
                     {
-                        var binding = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
-
-                        var metadataType = metadataInfo.ConcreteType;
-                        metadataType.GetProperties(binding)
+                        metadataInfo.GetResolutionProperties()
                                     .RunRegistration(in metadataInfo,
                                                      _delegateBuiler,
                                                      _registration,
