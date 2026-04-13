@@ -2,9 +2,9 @@
 using System.Reflection;
 
 
-namespace SlimResolution.Core.MetadataRegistration.Internals;
+namespace SlimResolution.Core.MetadataRegistration;
 
-internal record struct MetadataInfo(Type InterfaceType, Type ConcreteType)
+public record struct MetadataInfo(Type InterfaceType, Type ConcreteType)
 {
     private readonly BindingFlags Binding => BindingFlags.Public
                                              | BindingFlags.NonPublic
@@ -17,5 +17,5 @@ internal record struct MetadataInfo(Type InterfaceType, Type ConcreteType)
     }
 
 
-    internal readonly PropertyInfo[] GetResolutionProperties() => ConcreteType.GetProperties(Binding);
+    public readonly PropertyInfo[] GetResolutionProperties() => ConcreteType.GetProperties(Binding);
 }

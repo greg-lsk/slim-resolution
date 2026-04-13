@@ -3,6 +3,7 @@
 using SlimResolution.Core;
 using SlimResolution.Core.ExtensionHelpers;
 using SlimResolution.Core.MetadataRegistration;
+
 using SlimResolution.Extensions.MicrosoftDI.Internals;
 
 
@@ -12,13 +13,8 @@ public static class Registration
 {
     public static IServiceCollection AddSlimResolution(this IServiceCollection services)
     {
+        var metadataLoader = MetadataLoader.Instance;
         var extensionContext = ExtensionContext.Instance;
-
-        var registrationContext = RegistrationContext.Create
-        (
-            (i, f) => services.AddSingleton(i, provider => f()),
-            (s, c) => (c as ResolutionContext).ProviderSelector().GetService(s)
-        );
 
         services.AddSingleton(typeof(IComposer<>), extensionContext.GetComposerType())
                 .AddSingleton<IResolutionContext, ResolutionContext>(provider =>
@@ -26,7 +22,16 @@ public static class Registration
                     return new(() => provider);
                 });
 
-        registrationContext.RegisterMetadata();
+        metadataLoader.OnEach((in m) =>
+        {
+            m.GetResolutionProperties()
+             .RunRegistration
+             (
+                in m,
+                (i, f) => services.AddSingleton(i, provider => f()),
+                (s, c) => (c as ResolutionContext).ProviderSelector().GetService(s)
+             );
+        });
 
         return services;
     }

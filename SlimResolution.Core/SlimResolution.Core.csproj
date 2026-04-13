@@ -12,14 +12,15 @@
     <Compile Include=".src\IComposer.cs" />
     <Compile Include=".src\IResolutionContext.cs" />
     <Compile Include=".src\IResolutionMetadata.cs" />
-    <Compile Include=".src\MetadataRegistration\.Internals\MetadataInfo.cs" />
-    <Compile Include=".src\MetadataRegistration\.Internals\Register.cs" />
+    <Compile Include=".src\MetadataRegistration\.Internals\MetadataAssembyLoader.cs" />
+    <Compile Include=".src\MetadataRegistration\MetadataLoader.cs" />
+    <Compile Include=".src\MetadataRegistration\MetadataInfo.cs" />
     <Compile Include=".src\MetadataRegistration\.Internals\Utils\PropertyInfoExtensions.cs" />
     <Compile Include=".src\MetadataRegistration\.Internals\Utils\ResolutionDelegateBuilder.cs" />
     <Compile Include=".src\MetadataRegistration\.Internals\Utils\TypeExtensions.cs" />
-    <Compile Include=".src\MetadataRegistration\.Internals\RegistrationSteps.cs" />
+    <Compile Include=".src\MetadataRegistration\.Internals\MetadataLoadingExtensions.cs" />
     <Compile Include=".src\MetadataRegistration\Delegates.cs" />
-    <Compile Include=".src\MetadataRegistration\RegistrationContext.cs" />
+    <Compile Include=".src\MetadataRegistration\RunRegistrationExtension.cs" />
     <Compile Include=".src\Resolution.cs" />
     <Compile Include=".src\ResolveUsingAttribute.cs" />
   </ItemGroup>
