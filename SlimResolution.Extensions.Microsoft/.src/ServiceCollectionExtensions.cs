@@ -11,11 +11,12 @@ namespace SlimResolution.Extensions.MicrosoftDI;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddSlimResolution(this IServiceCollection services)
+    public static IServiceCollection AddSlimResolution(this IServiceCollection services,
+                                                       string[] metadataHostAssemblyNames)
     {
-        var metadataLoader = MetadataLoader.Instance;
         var extensionContext = ExtensionContext.Instance;
-
+        var metadataLoader = MetadataLoader.Create(metadataHostAssemblyNames);
+        
         services.AddSingleton(typeof(IComposer<>), extensionContext.GetComposerType())
                 .AddSingleton<IResolutionContext, ResolutionContext>(provider =>
                 {

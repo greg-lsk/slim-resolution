@@ -7,15 +7,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
 
-var host = Host.CreateDefaultBuilder(args)
+var host = Host.CreateDefaultBuilder(args) 
                .ConfigureServices((context, services) =>
                {
                    services.AddScoped<IPseudoLog, PseudoLog>();
 
-                   services.AddSlimResolution();
+                   services.AddSlimResolution(["_UsageDemo.dll"]);
                })
                .Build();
-
 
 var i = 15;
 var aspectComposer = host.Services.GetRequiredService<IComposer<EvaluationLogging>>();
