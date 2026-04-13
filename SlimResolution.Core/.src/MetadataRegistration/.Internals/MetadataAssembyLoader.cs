@@ -13,7 +13,7 @@ internal class MetadataAssembyLoader : MetadataLoader
     {
         foreach (var dllFile in _dllFiles)
         {
-            var assembly = Assembly.LoadFile(dllFile);
+            var assembly = Assembly.LoadFrom(dllFile);
 
             assembly.GetTypes()
                     .FilterByMetadata()
