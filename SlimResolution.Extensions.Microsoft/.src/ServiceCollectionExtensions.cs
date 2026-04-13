@@ -9,7 +9,7 @@ using SlimResolution.Extensions.MicrosoftDI.Internals;
 
 namespace SlimResolution.Extensions.MicrosoftDI;
 
-public static class Registration
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddSlimResolution(this IServiceCollection services)
     {
