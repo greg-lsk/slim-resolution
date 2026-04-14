@@ -6,18 +6,18 @@ namespace _UsageDemo.Services;
 
 internal readonly partial struct EvaluationLogging 
 {
-    private readonly IResolutionMetadata<EvaluationLogging> _resolutionMetadata;
-    private readonly IResolutionContext _resolutionContext;
+    private IResolutionMetadata<EvaluationLogging> ResolutionMetadata { get; init; }
+    private IResolutionContext ResolutionContext { get; init; }
 
 
     private partial IPseudoLog Logger 
-        => (_resolutionMetadata as EvaluationLoggingMetadata).LoggerResolution(_resolutionContext);
+        => (ResolutionMetadata as EvaluationLoggingMetadata).LoggerResolution(ResolutionContext);
 
 
     internal EvaluationLogging(IResolutionMetadata<EvaluationLogging> metadata,
                                IResolutionContext context)
     {
-        _resolutionMetadata = metadata;
-        _resolutionContext = context;
+        ResolutionMetadata = metadata;
+        ResolutionContext = context;
     }
 }
