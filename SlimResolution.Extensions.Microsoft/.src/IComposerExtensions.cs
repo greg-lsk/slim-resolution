@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 
 using SlimResolution.Core;
 using SlimResolution.Core.ExtensionHelpers;
@@ -14,6 +15,7 @@ public static class IComposerExtensions
     {
         var context = ResolutionContext.Create(() => scope.ServiceProvider);
 
-        return ExtensionContext.Instance.Matarialize(composer, context);
-    }
+        try { return ExtensionContext.Instance.Matarialize(composer, context); }
+        catch (ArgumentException) { throw; }
+    }   
 }
