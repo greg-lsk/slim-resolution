@@ -22,7 +22,7 @@ public static class InvalidArgumentException
 
         throw new System.ArgumentException(
             $"\n{nameof(metadata)} is not the bound metadata to: '{typeof(T)}';" +
-            $"\nBound metadata type is: '{typeof(TMetadata)}'.\n" +
+            $"\nBound metadata type is: '{typeof(TMetadata)}'." +
             $"\nActual type was: '{metadata.GetType()}'.\n");
     }
 }
