@@ -18,6 +18,10 @@ var host = Host.CreateDefaultBuilder(args)
 
 var i = 15;
 var aspectComposer = host.Services.GetRequiredService<IComposer<EvaluationLogging>>();
+var customComposer = new CustomComposer();
+
+var customMetadata = new CustomMetadata();
+//var willThrowLog = customMetadata.Materialize(new CustomContext());
 
 var hostAspect = aspectComposer.Compose();
 hostAspect.Run(i++);
@@ -25,7 +29,27 @@ hostAspect.Run(i++);
 using (var scope = host.Services.CreateScope())
 {
     var scopedAspect = aspectComposer.ComposeFor(scope);
+    //var willThrow = customComposer.ComposeFor(scope);
 
     hostAspect.Run(i++);
     scopedAspect.Run(i++);
 }
+
+
+internal class CustomComposer : IComposer<EvaluationLogging>
+{
+    public EvaluationLogging Compose()
+    {
+        return new();
+    }
+}
+
+internal class CustomMetadata : IResolutionMetadata<EvaluationLogging>
+{
+    public EvaluationLogging Materialize(IResolutionContext context)
+    {
+        return new EvaluationLogging(this,  context);
+    }
+}
+
+internal class CustomContext : IResolutionContext;
