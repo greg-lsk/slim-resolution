@@ -1,12 +1,21 @@
 ﻿using _UsageDemo.Services;
 using SlimResolution.Core;
+using SlimResolution.Core.ErrorHandling.StaticThrowHelpers;
 
 
 namespace _UsageDemo.Services;
 
 internal readonly partial struct EvaluationLogging 
 {
-    private IResolutionMetadata<EvaluationLogging> ResolutionMetadata { get; init; }
+    private IResolutionMetadata<EvaluationLogging> ResolutionMetadata 
+    { 
+        get; 
+        init
+        {
+            InvalidArgumentException.ThrowIfNotBound<EvaluationLogging, EvaluationLoggingMetadata>(value);
+            field = value;
+        }
+    }
     private IResolutionContext ResolutionContext { get; init; }
 
 
