@@ -9,7 +9,7 @@ internal class ResolutionContext : IResolutionContext
     internal Func<IServiceProvider> ProviderSelector { get; }
 
 
-    public ResolutionContext(Func<IServiceProvider> providerSelector)
+    internal ResolutionContext(Func<IServiceProvider> providerSelector)
     {
         ProviderSelector = providerSelector;
     }
