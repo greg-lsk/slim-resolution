@@ -7,26 +7,21 @@ namespace _UsageDemo.Services;
 
 internal readonly partial struct EvaluationLogging 
 {
-    private IResolutionMetadata<EvaluationLogging> ResolutionMetadata 
-    { 
-        get; 
-        init
-        {
-            InvalidArgumentException.ThrowIfNotBound<EvaluationLogging, EvaluationLoggingMetadata>(value);
-            field = value;
-        }
-    }
-    private IResolutionContext ResolutionContext { get; init; }
+    private readonly IResolutionMetadata<EvaluationLogging> _resolutionMetadata;
+    private readonly IResolutionContext _resolutionContext;
 
 
     private partial IPseudoLog Logger 
-        => (ResolutionMetadata as EvaluationLoggingMetadata)!.LoggerResolution(ResolutionContext);
+        => (_resolutionMetadata as EvaluationLoggingMetadata)!.LoggerResolution(_resolutionContext);
 
 
     internal EvaluationLogging(IResolutionMetadata<EvaluationLogging> metadata,
                                IResolutionContext context)
     {
-        ResolutionMetadata = metadata;
-        ResolutionContext = context;
+        InvalidArgumentException.ThrowIfNotBound<EvaluationLogging, EvaluationLoggingMetadata>(metadata);
+        InvalidArgumentException.ThrowIfUnlinked(context, metadata);
+
+        _resolutionMetadata = metadata;
+        _resolutionContext = context;
     }
 }

@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Collections.Generic;
 
 using SlimResolution.Core.MetadataRegistration.Internals.Utils;
+using SlimResolution.Core.ErrorHandling;
 
 
 namespace SlimResolution.Core.MetadataRegistration;
@@ -11,11 +12,12 @@ public static class RunRegistrationExtension
 {
     public static void RunRegistration(this IEnumerable<PropertyInfo> propertyInfos,
                                        in MetadataInfo metadataInfo,
+                                       LinkToken linkToken,
                                        Registration registration,
                                        Resolution resolution)
     {
-        List<Type> resolutionTypes = [];
-        List<Delegate> resolutionDelegates = [];
+        List<Type> ctorArgTypes = [typeof(LinkToken)];
+        List<object> ctorArgs = [linkToken];
 
         var delegateBuilder = ResolutionDelegateBuilder.Instance;
 
@@ -23,15 +25,15 @@ public static class RunRegistrationExtension
         {
             if (!info.IsForResolutionDelegate()) continue;
 
-            resolutionTypes.Add(info.PropertyType);
+            ctorArgTypes.Add(info.PropertyType);
 
             var resolutionDelegate = delegateBuilder.BuildDelegate(info.PropertyType, resolution);
-            resolutionDelegates.Add(resolutionDelegate);
+            ctorArgs.Add(resolutionDelegate);
         }
 
-        var ctorInfo = metadataInfo.ConcreteType.GetConstructor([.. resolutionTypes])
+        var ctorInfo = metadataInfo.ConcreteType.GetConstructor([.. ctorArgTypes])
             ?? throw new MissingMethodException("ctor not found");
 
-        registration(metadataInfo.InterfaceType, () => ctorInfo.Invoke([.. resolutionDelegates]));
+        registration(metadataInfo.InterfaceType, () => ctorInfo.Invoke([.. ctorArgs]));
     }
 }

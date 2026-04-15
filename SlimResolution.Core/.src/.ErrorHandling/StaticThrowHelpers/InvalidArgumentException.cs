@@ -25,4 +25,15 @@ public static class InvalidArgumentException
             $"\nBound metadata type is: '{typeof(TMetadata)}'." +
             $"\nActual type was: '{metadata.GetType()}'.\n");
     }
+
+
+    public static void ThrowIfUnlinked<TContext, TTarget>(TContext context, IResolutionMetadata<TTarget> metadata)
+        where TTarget : struct
+        where TContext : class, IResolutionContext
+    {
+        if (context.LinkToken == metadata.LinkToken) return;
+
+        throw new System.ArgumentException(
+            $"\n{context.GetType()} is not linked to:'{metadata.GetType()}';\n");
+    }
 }

@@ -5,6 +5,7 @@ using SlimResolution.Extensions.MicrosoftDI;
 
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using SlimResolution.Core.ErrorHandling;
 
 
 var host = Host.CreateDefaultBuilder(args) 
@@ -18,12 +19,11 @@ var host = Host.CreateDefaultBuilder(args)
 
 var i = 15;
 var aspectComposer = host.Services.GetRequiredService<IComposer<EvaluationLogging>>();
-var customComposer = new CustomComposer();
-
-var customMetadata = new CustomMetadata();
-//var willThrowLog = customMetadata.Materialize(new CustomContext());
+//var customComposer = new CustomComposer();
 
 var hostAspect = aspectComposer.Compose();
+var throwCompose = aspectComposer.ComposeCustomly(host.Services);
+
 hostAspect.Run(i++);
 
 using (var scope = host.Services.CreateScope())
@@ -36,20 +36,35 @@ using (var scope = host.Services.CreateScope())
 }
 
 
-internal class CustomComposer : IComposer<EvaluationLogging>
+//internal class CustomComposer : IComposer<EvaluationLogging>
+//{
+//    public EvaluationLogging Compose()
+//    {
+//        return new();
+//    }
+//}
+
+//internal class CustomMetadata : IResolutionMetadata<EvaluationLogging>
+//{
+//    public LinkToken LinkToken => new();
+
+//    public EvaluationLogging Materialize(IResolutionContext context)
+//    {
+//        return new EvaluationLogging(this, context);
+//    }
+//}
+
+internal class CustomContext : IResolutionContext
 {
-    public EvaluationLogging Compose()
-    {
-        return new();
-    }
+    public LinkToken LinkToken => new();
 }
 
-internal class CustomMetadata : IResolutionMetadata<EvaluationLogging>
+internal static class CustomComposerExtensions
 {
-    public EvaluationLogging Materialize(IResolutionContext context)
+    internal static EvaluationLogging ComposeCustomly(this IComposer<EvaluationLogging> composer ,IServiceProvider provider)
     {
-        return new EvaluationLogging(this,  context);
+        var md = provider.GetRequiredService<IResolutionMetadata<EvaluationLogging>>();
+
+        return new(md, new CustomContext());
     }
 }
-
-internal class CustomContext : IResolutionContext;

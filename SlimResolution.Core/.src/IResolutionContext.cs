@@ -1,3 +1,9 @@
-﻿namespace SlimResolution.Core;
+﻿using SlimResolution.Core.ErrorHandling;
 
-public interface IResolutionContext { }
+
+namespace SlimResolution.Core;
+
+public interface IResolutionContext 
+{ 
+    public LinkToken LinkToken { get; }
+}
