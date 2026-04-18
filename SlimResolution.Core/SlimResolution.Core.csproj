@@ -7,12 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include=".src\.ErrorHandling\LinkToken.cs" />
     <Compile Include=".src\.ErrorHandling\StaticThrowHelpers\InvalidArgumentException.cs" />
     <Compile Include=".src\.Internals\Composer.cs" />
     <Compile Include=".src\ExtensionHelpers\ExtensionContext.cs" />
     <Compile Include=".src\IComposer.cs" />
-    <Compile Include=".src\IResolutionContext.cs" />
     <Compile Include=".src\IResolutionMetadata.cs" />
     <Compile Include=".src\MetadataRegistration\MetadataLoader.cs" />
     <Compile Include=".src\MetadataRegistration\MetadataInfo.cs" />
@@ -23,6 +21,7 @@
     <Compile Include=".src\MetadataRegistration\Delegates.cs" />
     <Compile Include=".src\MetadataRegistration\RunRegistrationExtension.cs" />
     <Compile Include=".src\Resolution.cs" />
+    <Compile Include=".src\ResolutionMetadataBase.cs" />
     <Compile Include=".src\ResolutionSource.cs" />
     <Compile Include=".src\ResolutionSourceProcessing\SourceAccessor.cs" />
     <Compile Include=".src\ResolutionSourceProcessing\SourceFactory.cs" />

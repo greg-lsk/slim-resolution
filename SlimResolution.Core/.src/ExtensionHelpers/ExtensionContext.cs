@@ -10,19 +10,19 @@ public readonly struct ExtensionContext
     public static ExtensionContext Instance => new();
 
 
-    public Type GetComposerType()
+    public void RegisterIComposer(Action<Type, Type> register)
     {
-        return typeof(Composer<>);
+        register(typeof(IComposer<>), typeof(Composer<>));
     }
 
-    public TResolved Matarialize<TResolved>(IComposer<TResolved> composer, IResolutionContext context)
+    public TResolved Matarialize<TResolved>(IComposer<TResolved> composer, ResolutionSource source)
         where TResolved : struct
     {
         InvalidArgumentException.ThrowIfNotDefaultComposer(composer);
 
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 //Unreachable if composer is invalid — ThrowIfNotDefaultComposer already throws, so the cast is safe.
-        return (composer as Composer<TResolved>).Metadata.Materialize(context);
+        return (composer as Composer<TResolved>).Metadata.Materialize(source);
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 }

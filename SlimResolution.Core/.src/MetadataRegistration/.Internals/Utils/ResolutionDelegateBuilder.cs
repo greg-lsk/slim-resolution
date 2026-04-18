@@ -13,7 +13,7 @@ internal readonly struct ResolutionDelegateBuilder
     {
         var serviceType = type.GetGenericArguments()[0];
 
-        var contextParam = Expression.Parameter(typeof(IResolutionContext), "context");
+        var sourceParam = Expression.Parameter(typeof(object), "source");
 
         var serviceTypeConst = Expression.Constant(serviceType, typeof(Type));
         var resolutionConst = Expression.Constant(resolutionDelegate, typeof(Resolution));
@@ -24,13 +24,13 @@ internal readonly struct ResolutionDelegateBuilder
             resolutionConst,
             typeof(Resolution).GetMethod(nameof(Resolution.Invoke)), 
             serviceTypeConst, 
-            contextParam
+            sourceParam
         );
 
         var converted = Expression.Convert(invokeResolution, serviceType);
 
         var lambdaType = typeof(Resolution<>).MakeGenericType(serviceType);
-        var lambda = Expression.Lambda(lambdaType, converted, contextParam);
+        var lambda = Expression.Lambda(lambdaType, converted, sourceParam);
 
         return lambda.Compile();
     }

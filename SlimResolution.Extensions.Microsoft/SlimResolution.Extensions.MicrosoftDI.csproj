@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include=".src\.Internals\ResolutionContext.cs" />
     <Compile Include=".src\IComposerExtensions.cs" />
     <Compile Include=".src\ServiceCollectionExtensions.cs" />
   </ItemGroup>

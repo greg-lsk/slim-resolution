@@ -27,13 +27,12 @@ public static class InvalidArgumentException
     }
 
 
-    public static void ThrowIfUnlinked<TContext, TTarget>(TContext context, IResolutionMetadata<TTarget> metadata)
+    public static void ThrowIfUnlinked<TTarget>(ResolutionSource source, IResolutionMetadata<TTarget> metadata)
         where TTarget : struct
-        where TContext : class, IResolutionContext
     {
-        if (context.LinkToken == metadata.LinkToken) return;
+        if (metadata.IsLinkedTo(source)) return;
 
         throw new System.ArgumentException(
-            $"\n{context.GetType()} is not linked to:'{metadata.GetType()}';\n");
+            $"\n{source.GetType()} is not linked to:'{metadata.GetType()}';\n");
     }
 }

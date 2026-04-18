@@ -1,17 +1,43 @@
-﻿namespace SlimResolution.Core.Internals;
+﻿using System;
+using SlimResolution.Core.ResolutionSourceProcessing;
+
+
+namespace SlimResolution.Core.Internals;
 
 internal class Composer<T> : IComposer<T> where T : struct
 {
-    internal readonly IResolutionMetadata<T> Metadata;
-    internal readonly IResolutionContext Context;
+    private readonly ResolutionSource _resolutionSource;
+
+    internal IResolutionMetadata<T> Metadata { get; }
+    public Func<object, ResolutionSource> ResolutionSourceFactory { get; }
 
 
-    public Composer(IResolutionMetadata<T> metadata, IResolutionContext context)
+    public Composer(IResolutionMetadata<T> metadata, ICompositionRootProvider rootProvider)
     {
+        var factory = new SourceFactory().Factory;
+
+        _resolutionSource = factory(rootProvider.Provider);
+        
+        ResolutionSourceFactory = factory;
         Metadata = metadata;
-        Context = context;
     }
 
 
-    public T Compose() => Metadata.Materialize(Context);
+    public T Compose() => Metadata.Materialize(_resolutionSource);
+}
+
+
+public interface ICompositionRootProvider
+{
+    public object Provider { get; }
+}
+public class CompositionRootProvider : ICompositionRootProvider
+{
+    public object Provider { get; }
+
+
+    public CompositionRootProvider(object provider)
+    {
+        Provider = provider;
+    }
 }

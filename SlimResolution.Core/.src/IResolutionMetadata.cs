@@ -1,10 +1,8 @@
-﻿using SlimResolution.Core.ErrorHandling;
-
-
-namespace SlimResolution.Core;
+﻿namespace SlimResolution.Core;
 
 public interface IResolutionMetadata<T> where T : struct 
 {
-    public LinkToken LinkToken { get; }
-    public T Materialize(IResolutionContext context);
+    public T Materialize(ResolutionSource source);
+
+    public bool IsLinkedTo(ResolutionSource source);
 }

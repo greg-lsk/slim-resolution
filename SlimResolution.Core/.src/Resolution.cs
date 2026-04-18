@@ -1,3 +1,3 @@
 ﻿namespace SlimResolution.Core;
 
-public delegate T Resolution<T>(IResolutionContext context) where T : notnull;
+public delegate T Resolution<T>(object source) where T : notnull;

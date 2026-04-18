@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Collections.Generic;
 
 using SlimResolution.Core.MetadataRegistration.Internals.Utils;
-using SlimResolution.Core.ErrorHandling;
 
 
 namespace SlimResolution.Core.MetadataRegistration;
@@ -12,12 +11,12 @@ public static class RunRegistrationExtension
 {
     public static void RunRegistration(this IEnumerable<PropertyInfo> propertyInfos,
                                        in MetadataInfo metadataInfo,
-                                       LinkToken linkToken,
+                                       Func<object, bool> validateSource,
                                        Registration registration,
                                        Resolution resolution)
     {
-        List<Type> ctorArgTypes = [typeof(LinkToken)];
-        List<object> ctorArgs = [linkToken];
+        List<Type> ctorArgTypes = [typeof(Func<object, bool>)];
+        List<object> ctorArgs = [validateSource];
 
         var delegateBuilder = ResolutionDelegateBuilder.Instance;
 

@@ -1,11 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
     
-using SlimResolution.Core;
-using SlimResolution.Core.ErrorHandling;
 using SlimResolution.Core.ExtensionHelpers;
+using SlimResolution.Core.Internals;
 using SlimResolution.Core.MetadataRegistration;
-
-using SlimResolution.Extensions.MicrosoftDI.Internals;
 
 
 namespace SlimResolution.Extensions.MicrosoftDI;
@@ -18,14 +16,9 @@ public static class ServiceCollectionExtensions
         var extensionContext = ExtensionContext.Instance;
         var metadataLoader = MetadataLoader.Create(metadataHostAssemblyNames);
 
-        var linkToken = LinkToken.Create<ResolutionContext, IResolutionMetadata<int>>();
+        services.AddSingleton<ICompositionRootProvider, CompositionRootProvider>(provider => new(provider));
 
-
-        services.AddSingleton(typeof(IComposer<>), extensionContext.GetComposerType())
-                .AddSingleton<IResolutionContext, ResolutionContext>(provider =>
-                {
-                    return new(() => provider, linkToken);
-                });
+        extensionContext.RegisterIComposer((t1, t2) => services.AddSingleton(t1, t2));
 
         metadataLoader.OnEach((in m) =>
         {
@@ -33,9 +26,9 @@ public static class ServiceCollectionExtensions
              .RunRegistration
              (
                 in m,
-                linkToken,
+                o => o is IServiceProvider,
                 (i, f) => services.AddSingleton(i, provider => f()),
-                (s, c) => (c as ResolutionContext).ProviderSelector().GetService(s)
+                (s, o) => (o as IServiceProvider).GetService(s)
              );
         });
 
