@@ -9,7 +9,7 @@ internal class SourceAccessor
 {
     private readonly Func<ResolutionSource, object> _accessor;
 
-    private Func<ResolutionSource, object> Accessor => _accessor;
+    internal Func<ResolutionSource, object> Accessor => _accessor;
 
 
     public SourceAccessor()
