@@ -23,11 +23,15 @@
     <Compile Include=".src\MetadataRegistration\Delegates.cs" />
     <Compile Include=".src\MetadataRegistration\RunRegistrationExtension.cs" />
     <Compile Include=".src\Resolution.cs" />
+    <Compile Include=".src\ResolutionSource.cs" />
+    <Compile Include=".src\ResolutionSourceProcessing\SourceAccessor.cs" />
+    <Compile Include=".src\ResolutionSourceProcessing\SourceFactory.cs" />
     <Compile Include=".src\ResolveUsingAttribute.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.HashCode" Version="6.0.0" />
+    <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.7.0" />
   </ItemGroup>
 
 </Project>
