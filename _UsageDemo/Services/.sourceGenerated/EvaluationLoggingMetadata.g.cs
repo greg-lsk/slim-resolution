@@ -4,23 +4,26 @@ using SlimResolution.Core.ErrorHandling;
 
 namespace _UsageDemo.Services;
 
-internal class EvaluationLoggingMetadata : IResolutionMetadata<EvaluationLogging>
+internal class EvaluationLoggingMetadata : ResolutionMetadataBase, IResolutionMetadata<EvaluationLogging>
 {
-    public LinkToken LinkToken { get; }
-    internal Resolution<IPseudoLog> LoggerResolution { get; }
+    private Resolution<IPseudoLog> _loggerResolution { get; }
 
 
     public EvaluationLoggingMetadata(
-        LinkToken token,
-        Resolution<IPseudoLog> loggerResolution)
+        Func<object, bool> validateSource,
+        Resolution<IPseudoLog> loggerResolution) : base(validateSource)
     {
-        LinkToken = token;
-        LoggerResolution = loggerResolution;
+        _loggerResolution = loggerResolution;
     }
 
 
-    public EvaluationLogging Materialize(IResolutionContext context)
+    public EvaluationLogging Materialize(ResolutionSource source)
     {
-        return new(this, context);
+        return new(this, source);
+    }
+
+    internal IPseudoLog LoggerResolution(ResolutionSource source)
+    {
+        return _loggerResolution(AccessSource(source));
     }
 }
