@@ -11,12 +11,12 @@ public static class RunRegistrationExtension
 {
     public static void RunRegistration(this IEnumerable<PropertyInfo> propertyInfos,
                                        in MetadataInfo metadataInfo,
-                                       Func<object, bool> validateSource,
+                                       ResolutionSourceValidation sourceValidation,
                                        Registration registration,
                                        Resolution resolution)
     {
-        List<Type> ctorArgTypes = [typeof(Func<object, bool>)];
-        List<object> ctorArgs = [validateSource];
+        List<Type> ctorArgTypes = [typeof(ResolutionSourceValidation)];
+        List<object> ctorArgs = [sourceValidation];
 
         var delegateBuilder = ResolutionDelegateBuilder.Instance;
 
