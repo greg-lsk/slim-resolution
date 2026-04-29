@@ -1,4 +1,5 @@
 ﻿using System;
+using SlimResolution.Core.MetadataRegistration;
 using SlimResolution.Core.ResolutionSourceProcessing;
 
 
@@ -6,17 +7,17 @@ namespace SlimResolution.Core;
 
 public abstract class ResolutionMetadataBase
 {
-    private readonly Func<object, bool> _validateSource;
+    private readonly ResolutionSourceValidation _sourceValidation;
 
     protected Func<ResolutionSource, object> AccessSource { get; }
 
 
-    protected ResolutionMetadataBase(Func<object, bool> validateSource)
+    protected ResolutionMetadataBase(ResolutionSourceValidation sourceValidation)
     {
         AccessSource = new SourceAccessor().Accessor;
-        _validateSource = validateSource;
+        _sourceValidation = sourceValidation;
     }
 
 
-    public bool IsLinkedTo(ResolutionSource source) => _validateSource(AccessSource(source));
+    public bool IsLinkedTo(ResolutionSource source) => _sourceValidation(AccessSource(source));
 }
