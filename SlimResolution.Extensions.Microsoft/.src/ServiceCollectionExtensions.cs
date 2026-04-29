@@ -27,8 +27,8 @@ public static class ServiceCollectionExtensions
              (
                 in m,
                 o => o is IServiceProvider,
-                (i, f) => services.AddSingleton(i, provider => f()),
-                (s, o) => (o as IServiceProvider).GetService(s)
+                (s, o) => (o as IServiceProvider).GetService(s),
+                (i, f) => services.AddSingleton(i, provider => f())
              );
         });
 

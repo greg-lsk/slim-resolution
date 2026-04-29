@@ -12,8 +12,8 @@ public static class RunRegistrationExtension
     public static void RunRegistration(this IEnumerable<PropertyInfo> propertyInfos,
                                        in MetadataInfo metadataInfo,
                                        ResolutionSourceValidation sourceValidation,
-                                       Registration registration,
-                                       Resolution resolution)
+                                       Resolution resolution,
+                                       Registration registration)
     {
         List<Type> ctorArgTypes = [typeof(ResolutionSourceValidation)];
         List<object> ctorArgs = [sourceValidation];
