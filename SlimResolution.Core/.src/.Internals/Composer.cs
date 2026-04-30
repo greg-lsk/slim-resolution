@@ -12,7 +12,7 @@ internal class Composer<T> : IComposer<T> where T : struct
     public Func<object, ResolutionSource> ResolutionSourceFactory { get; }
 
 
-    public Composer(IResolutionMetadata<T> metadata, ICompositionRootProvider rootProvider)
+    public Composer(IResolutionMetadata<T> metadata, ICompositionRootServiceProvider rootProvider)
     {
         var factory = new SourceFactory().Factory;
 
@@ -24,20 +24,4 @@ internal class Composer<T> : IComposer<T> where T : struct
 
 
     public T Compose() => Metadata.Materialize(_resolutionSource);
-}
-
-
-public interface ICompositionRootProvider
-{
-    public object Provider { get; }
-}
-public class CompositionRootProvider : ICompositionRootProvider
-{
-    public object Provider { get; }
-
-
-    public CompositionRootProvider(object provider)
-    {
-        Provider = provider;
-    }
 }
