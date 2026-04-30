@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
     
 using SlimResolution.Core.ExtensionHelpers;
-using SlimResolution.Core.Internals;
 using SlimResolution.Core.MetadataRegistration;
 
 
@@ -16,8 +15,7 @@ public static class ServiceCollectionExtensions
         var extensionContext = ExtensionContext.Instance;
         var metadataLoader = MetadataLoader.Create(metadataHostAssemblyNames);
 
-        services.AddSingleton<ICompositionRootProvider, CompositionRootProvider>(provider => new(provider));
-
+        extensionContext.RegisterResolutionProvider<IServiceProvider>((t, f) => services.AddSingleton(t, f));
         extensionContext.RegisterIComposer((t1, t2) => services.AddSingleton(t1, t2));
 
         metadataLoader.OnEach((in m) =>

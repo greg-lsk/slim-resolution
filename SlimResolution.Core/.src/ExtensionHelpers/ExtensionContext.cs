@@ -15,6 +15,12 @@ public readonly struct ExtensionContext
         register(typeof(IComposer<>), typeof(Composer<>));
     }
 
+    public void RegisterResolutionProvider<TProvider>(Action<Type,Func<TProvider, object>> register)
+        where TProvider : notnull
+    {
+        register(typeof(ICompositionRootServiceProvider), provider => new CompositionRootServiceProvider(provider));
+    }
+
     public TResolved Matarialize<TResolved>(IComposer<TResolved> composer, ResolutionSource source)
         where TResolved : struct
     {
