@@ -1,5 +1,6 @@
 ﻿using SlimResolution.Core;
 using SlimResolution.Core.ErrorHandling;
+using SlimResolution.Core.MetadataRegistration;
 
 
 namespace _UsageDemo.Services;
@@ -10,8 +11,8 @@ internal class EvaluationLoggingMetadata : ResolutionMetadataBase, IResolutionMe
 
 
     public EvaluationLoggingMetadata(
-        Func<object, bool> validateSource,
-        Resolution<IPseudoLog> loggerResolution) : base(validateSource)
+        ResolutionSourceValidation sourceValidation,
+        Resolution<IPseudoLog> loggerResolution) : base(sourceValidation)
     {
         _loggerResolution = loggerResolution;
     }
