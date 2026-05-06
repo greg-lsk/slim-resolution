@@ -25,6 +25,7 @@
     <Compile Include=".src\Resolution.cs" />
     <Compile Include=".src\ResolutionMetadataBase.cs" />
     <Compile Include=".src\ResolutionSource.cs" />
+    <Compile Include=".src\ResolutionSourceProcessing\Delegates.cs" />
     <Compile Include=".src\ResolutionSourceProcessing\SourceAccessor.cs" />
     <Compile Include=".src\ResolutionSourceProcessing\SourceFactory.cs" />
     <Compile Include=".src\ResolveUsingAttribute.cs" />

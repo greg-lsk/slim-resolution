@@ -7,9 +7,9 @@ namespace SlimResolution.Core.ResolutionSourceProcessing;
 
 internal class SourceFactory
 {
-    private readonly Func<object, ResolutionSource> _factory;
+    private readonly CreateResolutionSource _factory;
 
-    internal Func<object, ResolutionSource> Factory => _factory;
+    internal CreateResolutionSource Factory => _factory;
 
 
     internal SourceFactory()
@@ -43,6 +43,6 @@ internal class SourceFactory
         il.Emit(OpCodes.Ldloc_0);                 // load initialized struct
         il.Emit(OpCodes.Ret);
 
-        _factory = (Func<object?, ResolutionSource>)dm.CreateDelegate(typeof(Func<object?, ResolutionSource>));
+        _factory = (CreateResolutionSource)dm.CreateDelegate(typeof(CreateResolutionSource));
     }
 }

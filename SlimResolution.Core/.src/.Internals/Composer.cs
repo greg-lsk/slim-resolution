@@ -1,5 +1,4 @@
-﻿using System;
-using SlimResolution.Core.ResolutionSourceProcessing;
+﻿using SlimResolution.Core.ResolutionSourceProcessing;
 
 
 namespace SlimResolution.Core.Internals;
@@ -9,7 +8,7 @@ internal class Composer<T> : IComposer<T> where T : struct
     private readonly ResolutionSource _resolutionSource;
 
     internal IResolutionMetadata<T> Metadata { get; }
-    public Func<object, ResolutionSource> ResolutionSourceFactory { get; }
+    public CreateResolutionSource ResolutionSourceFactory { get; }
 
 
     public Composer(IResolutionMetadata<T> metadata, ICompositionRootServiceProvider rootProvider)

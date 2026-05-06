@@ -1,5 +1,4 @@
-﻿using System;
-using SlimResolution.Core.MetadataRegistration;
+﻿using SlimResolution.Core.MetadataRegistration;
 using SlimResolution.Core.ResolutionSourceProcessing;
 
 
@@ -9,7 +8,7 @@ public abstract class ResolutionMetadataBase
 {
     private readonly ResolutionSourceValidation _sourceValidation;
 
-    protected Func<ResolutionSource, object> AccessSource { get; }
+    protected AccessRootServiceProvider AccessSource { get; }
 
 
     protected ResolutionMetadataBase(ResolutionSourceValidation sourceValidation)

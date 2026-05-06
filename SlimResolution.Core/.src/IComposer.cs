@@ -1,11 +1,11 @@
-﻿using System;
+﻿using SlimResolution.Core.ResolutionSourceProcessing;
 
 
 namespace SlimResolution.Core;
 
 public interface IComposer<T> where T : struct
 {
-    public Func<object, ResolutionSource> ResolutionSourceFactory { get; }
+    public CreateResolutionSource ResolutionSourceFactory { get; }
 
     public T Compose();
 }

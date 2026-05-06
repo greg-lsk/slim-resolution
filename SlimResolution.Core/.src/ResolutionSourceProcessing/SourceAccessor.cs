@@ -7,9 +7,9 @@ namespace SlimResolution.Core.ResolutionSourceProcessing;
 
 internal class SourceAccessor
 {
-    private readonly Func<ResolutionSource, object> _accessor;
+    private readonly AccessRootServiceProvider _accessor;
 
-    internal Func<ResolutionSource, object> Accessor => _accessor;
+    internal AccessRootServiceProvider Accessor => _accessor;
 
 
     public SourceAccessor()
@@ -37,6 +37,6 @@ internal class SourceAccessor
         il.Emit(OpCodes.Ldfld, field);              // load value of the field
         il.Emit(OpCodes.Ret);
 
-        _accessor = (Func<ResolutionSource, object>) dm.CreateDelegate(typeof(Func<ResolutionSource, object>));
+        _accessor = (AccessRootServiceProvider) dm.CreateDelegate(typeof(AccessRootServiceProvider));
     }
 }
