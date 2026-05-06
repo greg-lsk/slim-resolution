@@ -12,7 +12,7 @@ internal class SourceFactory
     internal CreateResolutionSource Factory => _factory;
 
 
-    internal SourceFactory()
+    private SourceFactory()
     {
         var structType = typeof(ResolutionSource);
 
@@ -45,4 +45,5 @@ internal class SourceFactory
 
         _factory = (CreateResolutionSource)dm.CreateDelegate(typeof(CreateResolutionSource));
     }
+    internal static SourceFactory Instance => new();
 }

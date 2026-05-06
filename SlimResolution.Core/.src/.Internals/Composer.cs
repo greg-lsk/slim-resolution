@@ -13,7 +13,7 @@ internal class Composer<T> : IComposer<T> where T : struct
 
     public Composer(IResolutionMetadata<T> metadata, ICompositionRootServiceProvider rootProvider)
     {
-        var factory = new SourceFactory().Factory;
+        var factory = SourceFactory.Instance.Factory;
 
         _resolutionSource = factory(rootProvider.Provider);
         

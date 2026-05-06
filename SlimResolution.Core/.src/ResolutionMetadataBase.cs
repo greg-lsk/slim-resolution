@@ -13,7 +13,7 @@ public abstract class ResolutionMetadataBase
 
     protected ResolutionMetadataBase(ResolutionSourceValidation sourceValidation)
     {
-        AccessSource = new SourceAccessor().Accessor;
+        AccessSource = SourceAccessor.Instance.Accessor;
         _sourceValidation = sourceValidation;
     }
 

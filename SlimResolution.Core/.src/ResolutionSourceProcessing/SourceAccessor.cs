@@ -12,7 +12,7 @@ internal class SourceAccessor
     internal AccessRootServiceProvider Accessor => _accessor;
 
 
-    public SourceAccessor()
+    private SourceAccessor()
     {
         var fieldName = "_source";
         var structType = typeof(ResolutionSource);
@@ -39,4 +39,5 @@ internal class SourceAccessor
 
         _accessor = (AccessRootServiceProvider) dm.CreateDelegate(typeof(AccessRootServiceProvider));
     }
+    internal static SourceAccessor Instance => new();
 }
