@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Collections.Generic;
 
+using SlimResolution.Core.ResolutionSourceProcessing;
 using SlimResolution.Core.MetadataRegistration.Internals.Utils;
 
 
@@ -15,8 +16,12 @@ public static class RunRegistrationExtension
                                        Resolution resolution,
                                        Registration registration)
     {
-        List<Type> ctorArgTypes = [typeof(ResolutionSourceValidation)];
+        List<Type> ctorArgTypes = [typeof(ResolutionSourceValidation), typeof(IDelegateCreator)];
         List<object> ctorArgs = [sourceValidation];
+
+
+        List<Type> resolutionDelegateTypes = [];
+        List<object> resolutionDelegates = [];
 
         var delegateBuilder = ResolutionDelegateBuilder.Instance;
 
@@ -24,15 +29,22 @@ public static class RunRegistrationExtension
         {
             if (!info.IsForResolutionDelegate()) continue;
 
-            ctorArgTypes.Add(info.PropertyType);
+            resolutionDelegateTypes.Add(info.PropertyType);
 
             var resolutionDelegate = delegateBuilder.BuildDelegate(info.PropertyType, resolution);
-            ctorArgs.Add(resolutionDelegate);
+            resolutionDelegates.Add(resolutionDelegate);
         }
 
-        var ctorInfo = metadataInfo.ConcreteType.GetConstructor([.. ctorArgTypes])
+        ctorArgTypes.AddRange(resolutionDelegateTypes);
+        var ctorInfo = metadataInfo.ConcreteType.GetConstructor([..ctorArgTypes])
             ?? throw new MissingMethodException("ctor not found");
 
-        registration(metadataInfo.InterfaceType, () => ctorInfo.Invoke([.. ctorArgs]));
+        registration(metadataInfo.InterfaceType, s =>
+        {
+            ctorArgs.Add(resolution(typeof(IDelegateCreator), s));
+            ctorArgs.AddRange(resolutionDelegates);
+
+            return ctorInfo.Invoke([.. ctorArgs]);
+        });
     }
 }

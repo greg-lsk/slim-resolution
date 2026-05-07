@@ -3,7 +3,7 @@
 
 namespace SlimResolution.Core.MetadataRegistration;
 
-public delegate object ServiceFactory();
+public delegate object ServiceFactory(object source);
 public delegate void Registration(Type interfaceType, ServiceFactory concreteTypeFactory);
 
 public delegate object Resolution(Type serviceType, object source);

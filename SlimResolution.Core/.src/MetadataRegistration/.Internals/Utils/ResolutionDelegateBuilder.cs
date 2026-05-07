@@ -33,5 +33,5 @@ internal readonly struct ResolutionDelegateBuilder
         var lambda = Expression.Lambda(lambdaType, converted, sourceParam);
 
         return lambda.Compile();
-    }
+    } 
 }
