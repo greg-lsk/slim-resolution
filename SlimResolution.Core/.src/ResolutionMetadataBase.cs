@@ -1,18 +1,17 @@
 ﻿using SlimResolution.Core.MetadataRegistration;
 using SlimResolution.Core.ResolutionSourceProcessing;
-using SlimResolution.Core.ResolutionSourceProcessing.Internals;
 
 
 namespace SlimResolution.Core;
 
 public abstract class ResolutionMetadataBase
 {
-    private readonly ResolutionSourceValidation _sourceValidation;
+    private readonly ValidateResolutionSource _sourceValidation;
 
     protected AccessRootServiceProvider AccessSource { get; }
 
 
-    protected ResolutionMetadataBase(ResolutionSourceValidation sourceValidation,
+    protected ResolutionMetadataBase(ValidateResolutionSource sourceValidation,
                                      IDelegateCreator delegateCreator)
     {
         AccessSource = delegateCreator.Create<AccessRootServiceProvider>();

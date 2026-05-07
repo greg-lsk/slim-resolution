@@ -2,27 +2,27 @@
 using System.Linq.Expressions;
 
 
-namespace SlimResolution.Core.MetadataRegistration.Internals.Utils;
+namespace SlimResolution.Core.MetadataRegistration.Internals;
 
 internal readonly struct ResolutionDelegateBuilder
 {
     internal static ResolutionDelegateBuilder Instance => new();
 
 
-    internal Delegate BuildDelegate(Type type, Resolution resolutionDelegate)
+    internal Delegate BuildDelegate(Type type, ResolveMetadataDependency resolveMetadataDependency)
     {
         var serviceType = type.GetGenericArguments()[0];
 
         var sourceParam = Expression.Parameter(typeof(object), "source");
 
         var serviceTypeConst = Expression.Constant(serviceType, typeof(Type));
-        var resolutionConst = Expression.Constant(resolutionDelegate, typeof(Resolution));
+        var resolutionConst = Expression.Constant(resolveMetadataDependency, typeof(ResolveMetadataDependency));
 
 
         var invokeResolution = Expression.Call
         (
             resolutionConst,
-            typeof(Resolution).GetMethod(nameof(Resolution.Invoke)), 
+            typeof(ResolveMetadataDependency).GetMethod(nameof(ResolveMetadataDependency.Invoke)), 
             serviceTypeConst, 
             sourceParam
         );

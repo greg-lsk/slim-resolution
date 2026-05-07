@@ -11,7 +11,7 @@ internal class EvaluationLoggingMetadata : ResolutionMetadataBase, IResolutionMe
     private Resolution<IPseudoLog> _loggerResolution { get; }
 
 
-    public EvaluationLoggingMetadata(ResolutionSourceValidation sourceValidation,
+    public EvaluationLoggingMetadata(ValidateResolutionSource sourceValidation,
                                      IDelegateCreator delegateCreator,
                                      Resolution<IPseudoLog> loggerResolution) : base(sourceValidation, delegateCreator)
     {

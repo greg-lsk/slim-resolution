@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 
 
-namespace SlimResolution.Core.MetadataRegistration.Internals.Utils;
+namespace SlimResolution.Core.MetadataRegistration.Internals;
 
 internal static class PropertyInfoExtensions
 {

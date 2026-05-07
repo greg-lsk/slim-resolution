@@ -3,10 +3,10 @@
 
 namespace SlimResolution.Core.MetadataRegistration;
 
-public delegate object ServiceFactory(object source);
-public delegate void Registration(Type interfaceType, ServiceFactory concreteTypeFactory);
+public delegate object InstantiateMetadata(object resolutionSource);
+public delegate void RegisterMetadata(Type metadataInterfaceType, InstantiateMetadata instantiateMetadata);
 
-public delegate object Resolution(Type serviceType, object source);
-public delegate bool ResolutionSourceValidation(object source);
+public delegate object ResolveMetadataDependency(Type metadataDependencyType, object resolutionSource);
+public delegate bool ValidateResolutionSource(object resolutionSource);
 
-public delegate void MetadataInfoHandler(in MetadataInfo metadataInfo);
+public delegate void HandleMetadataInfo(in MetadataInfo metadataInfo);

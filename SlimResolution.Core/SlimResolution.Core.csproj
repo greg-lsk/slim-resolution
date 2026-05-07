@@ -16,12 +16,12 @@
     <Compile Include=".src\IResolutionMetadata.cs" />
     <Compile Include=".src\MetadataRegistration\MetadataLoader.cs" />
     <Compile Include=".src\MetadataRegistration\MetadataInfo.cs" />
-    <Compile Include=".src\MetadataRegistration\.Internals\Utils\PropertyInfoExtensions.cs" />
-    <Compile Include=".src\MetadataRegistration\.Internals\Utils\ResolutionDelegateBuilder.cs" />
-    <Compile Include=".src\MetadataRegistration\.Internals\Utils\TypeExtensions.cs" />
-    <Compile Include=".src\MetadataRegistration\.Internals\MetadataLoadingExtensions.cs" />
+    <Compile Include=".src\MetadataRegistration\.Internals\PropertyInfoExtensions.cs" />
+    <Compile Include=".src\MetadataRegistration\.Internals\ResolutionDelegateBuilder.cs" />
+    <Compile Include=".src\MetadataRegistration\.Internals\TypeExtensions.cs" />
+    <Compile Include=".src\MetadataRegistration\.Internals\MetadataInfoExtensions.cs" />
     <Compile Include=".src\MetadataRegistration\Delegates.cs" />
-    <Compile Include=".src\MetadataRegistration\RunRegistrationExtension.cs" />
+    <Compile Include=".src\MetadataRegistration\PropertyInfoExtension.cs" />
     <Compile Include=".src\Resolution.cs" />
     <Compile Include=".src\ResolutionMetadataBase.cs" />
     <Compile Include=".src\ResolutionSource.cs" />

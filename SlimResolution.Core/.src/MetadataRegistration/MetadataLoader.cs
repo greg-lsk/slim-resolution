@@ -19,7 +19,7 @@ public class MetadataLoader
     }
 
 
-    public void OnEach(MetadataInfoHandler handler)
+    public void OnEach(HandleMetadataInfo handler)
     {
         foreach (var assemblyName in _metadataHostAssemblyNames)
         {
