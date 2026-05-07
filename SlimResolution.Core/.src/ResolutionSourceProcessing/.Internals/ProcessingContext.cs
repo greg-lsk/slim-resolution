@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reflection;
 
+using SlimResolution.Core.ServiceProviderAbstractions;
+
 
 namespace SlimResolution.Core.ResolutionSourceProcessing.Internals;
 

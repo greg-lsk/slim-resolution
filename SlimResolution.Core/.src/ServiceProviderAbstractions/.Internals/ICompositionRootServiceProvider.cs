@@ -1,4 +1,4 @@
-﻿namespace SlimResolution.Core.Internals;
+﻿namespace SlimResolution.Core.ServiceProviderAbstractions.Internals;
 
 internal interface ICompositionRootServiceProvider
 {

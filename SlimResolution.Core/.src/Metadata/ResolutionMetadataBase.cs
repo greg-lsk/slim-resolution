@@ -1,8 +1,9 @@
 ﻿using SlimResolution.Core.MetadataRegistration;
 using SlimResolution.Core.ResolutionSourceProcessing;
+using SlimResolution.Core.ServiceProviderAbstractions;
 
 
-namespace SlimResolution.Core;
+namespace SlimResolution.Core.Metadata;
 
 public abstract class ResolutionMetadataBase
 {

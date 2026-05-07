@@ -3,7 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
     
 using SlimResolution.Core.ExtensionHelpers;
 using SlimResolution.Core.MetadataRegistration;
+using SlimResolution.Core.ResolutionComposition.DependencyInjection;
 using SlimResolution.Core.ResolutionSourceProcessing.DependencyInjection;
+using SlimResolution.Core.ServiceProviderAbstractions.DependencyInjection;
 
 
 namespace SlimResolution.Extensions.MicrosoftDI;

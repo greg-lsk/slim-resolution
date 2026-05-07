@@ -1,7 +1,9 @@
 ﻿using SlimResolution.Core.ResolutionSourceProcessing;
+using SlimResolution.Core.ServiceProviderAbstractions;
+using SlimResolution.Core.ServiceProviderAbstractions.Internals;
 
 
-namespace SlimResolution.Core.Internals;
+namespace SlimResolution.Core.ResolutionComposition.Internals;
 
 internal class Composer<T> : IComposer<T> where T : struct
 {

@@ -1,4 +1,7 @@
-﻿namespace SlimResolution.Core;
+﻿using SlimResolution.Core.ServiceProviderAbstractions;
+
+
+namespace SlimResolution.Core;
 
 public interface IResolutionMetadata<T> where T : struct 
 {

@@ -8,12 +8,12 @@
 
   <ItemGroup>
     <Compile Include=".src\.ErrorHandling\StaticThrowHelpers\InvalidArgumentException.cs" />
-    <Compile Include=".src\.Internals\Composer.cs" />
-    <Compile Include=".src\.Internals\CompositionRootServiceProvider.cs" />
-    <Compile Include=".src\.Internals\ICompositionRootServiceProvider.cs" />
+    <Compile Include=".src\ResolutionComposition\.Internals\Composer.cs" />
+    <Compile Include=".src\ServiceProviderAbstractions\.Internals\CompositionRootServiceProvider.cs" />
+    <Compile Include=".src\ServiceProviderAbstractions\.Internals\ICompositionRootServiceProvider.cs" />
     <Compile Include=".src\ExtensionHelpers\ExtensionContext.cs" />
-    <Compile Include=".src\IComposer.cs" />
-    <Compile Include=".src\IResolutionMetadata.cs" />
+    <Compile Include=".src\ResolutionComposition\.Core\IComposer.cs" />
+    <Compile Include=".src\Metadata\.Core\IResolutionMetadata.cs" />
     <Compile Include=".src\MetadataRegistration\MetadataLoader.cs" />
     <Compile Include=".src\MetadataRegistration\MetadataInfo.cs" />
     <Compile Include=".src\MetadataRegistration\.Internals\PropertyInfoExtensions.cs" />
@@ -22,17 +22,19 @@
     <Compile Include=".src\MetadataRegistration\.Internals\MetadataInfoExtensions.cs" />
     <Compile Include=".src\MetadataRegistration\Delegates.cs" />
     <Compile Include=".src\MetadataRegistration\PropertyInfoExtension.cs" />
-    <Compile Include=".src\Resolution.cs" />
-    <Compile Include=".src\ResolutionMetadataBase.cs" />
-    <Compile Include=".src\ResolutionSource.cs" />
-    <Compile Include=".src\ResolutionSourceProcessing\DependencyInjection\ExtensionContextExtensions.cs" />
+    <Compile Include=".src\Metadata\.Core\Delegates.cs" />
+    <Compile Include=".src\Metadata\ResolutionMetadataBase.cs" />
+    <Compile Include=".src\ServiceProviderAbstractions\DependencyInjection\ExtensionContextExtensions.cs" />
+    <Compile Include=".src\ServiceProviderAbstractions\ResolutionSource.cs" />
+    <Compile Include=".src\ResolutionComposition\DependencyInjection\ExtensionContextExtensions.cs" />
     <Compile Include=".src\ResolutionSourceProcessing\.Internals\DelegateILGenerator.cs" />
     <Compile Include=".src\ResolutionSourceProcessing\.Internals\IDelegateFactory.cs" />
     <Compile Include=".src\ResolutionSourceProcessing\.Internals\IReflectionContext.cs" />
     <Compile Include=".src\ResolutionSourceProcessing\Delegates.cs" />
+    <Compile Include=".src\ResolutionSourceProcessing\DependencyInjection\ExtensionContextExtensions.cs" />
     <Compile Include=".src\ResolutionSourceProcessing\IDelegateCreator.cs" />
     <Compile Include=".src\ResolutionSourceProcessing\.Internals\ProcessingContext.cs" />
-    <Compile Include=".src\ResolveUsingAttribute.cs" />
+    <Compile Include=".src\Attributes\.Core\ResolveUsingAttribute.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,7 +1,9 @@
 ﻿using SlimResolution.Core;
-using SlimResolution.Core.ErrorHandling;
+using SlimResolution.Core.Metadata;
 using SlimResolution.Core.MetadataRegistration;
+using SlimResolution.Core.ErrorHandling;
 using SlimResolution.Core.ResolutionSourceProcessing;
+using SlimResolution.Core.ServiceProviderAbstractions;
 
 
 namespace _UsageDemo.Services;

@@ -1,5 +1,7 @@
 ﻿using _UsageDemo.Services;
+
 using SlimResolution.Core;
+using SlimResolution.Core.ServiceProviderAbstractions;
 using SlimResolution.Core.ErrorHandling.StaticThrowHelpers;
 
 
@@ -7,8 +9,8 @@ namespace _UsageDemo.Services;
 
 internal readonly partial struct EvaluationLogging 
 {
-    private readonly IResolutionMetadata<EvaluationLogging> _resolutionMetadata;
     private readonly ResolutionSource _resolutionSource;
+    private readonly IResolutionMetadata<EvaluationLogging> _resolutionMetadata;
 
 
     private partial IPseudoLog Logger

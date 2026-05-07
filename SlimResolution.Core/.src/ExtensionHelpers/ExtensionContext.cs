@@ -1,5 +1,5 @@
-﻿using System;
-using SlimResolution.Core.Internals;
+﻿using SlimResolution.Core.ServiceProviderAbstractions;
+using SlimResolution.Core.ResolutionComposition.Internals;
 using SlimResolution.Core.ErrorHandling.StaticThrowHelpers;
 
 
@@ -9,17 +9,6 @@ public readonly struct ExtensionContext
 {
     public static ExtensionContext Instance => new();
 
-
-    public void RegisterIComposer(Action<Type, Type> register)
-    {
-        register(typeof(IComposer<>), typeof(Composer<>));
-    }
-
-    public void RegisterResolutionProvider<TProvider>(Action<Type,Func<TProvider, object>> register)
-        where TProvider : notnull
-    {
-        register(typeof(ICompositionRootServiceProvider), provider => new CompositionRootServiceProvider(provider));
-    }
 
     public TResolved Matarialize<TResolved>(IComposer<TResolved> composer, ResolutionSource source)
         where TResolved : struct

@@ -1,4 +1,4 @@
-﻿namespace SlimResolution.Core;
+﻿namespace SlimResolution.Core.ServiceProviderAbstractions;
 
 public readonly struct ResolutionSource
 {

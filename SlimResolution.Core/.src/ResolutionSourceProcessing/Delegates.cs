@@ -1,4 +1,7 @@
-﻿namespace SlimResolution.Core.ResolutionSourceProcessing;
+﻿using SlimResolution.Core.ServiceProviderAbstractions;
+
+
+namespace SlimResolution.Core.ResolutionSourceProcessing;
 
 public delegate ResolutionSource CreateResolutionSource(object rootServiceProvider);
 public delegate object AccessRootServiceProvider(ResolutionSource resolutionSource);

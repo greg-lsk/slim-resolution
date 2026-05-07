@@ -1,4 +1,7 @@
-﻿using SlimResolution.Core.Internals;
+﻿using System;
+
+using SlimResolution.Core.ServiceProviderAbstractions;
+using SlimResolution.Core.ResolutionComposition.Internals;
 
 
 namespace SlimResolution.Core.ErrorHandling.StaticThrowHelpers;
@@ -9,7 +12,7 @@ public static class InvalidArgumentException
     {
         if (composer is Composer<TTarget>) return;
 
-        throw new System.ArgumentException(
+        throw new ArgumentException(
             $"\n{nameof(composer)} must not be a custom implementation of: '{typeof(IComposer<TTarget>)}';" +
             $"\nActual type was: '{composer.GetType()}'.\n");
     }
@@ -20,7 +23,7 @@ public static class InvalidArgumentException
     {
         if (metadata is TMetadata) return;
 
-        throw new System.ArgumentException(
+        throw new ArgumentException(
             $"\n{nameof(metadata)} is not the bound metadata to: '{typeof(T)}';" +
             $"\nBound metadata type is: '{typeof(TMetadata)}'." +
             $"\nActual type was: '{metadata.GetType()}'.\n");
@@ -32,7 +35,7 @@ public static class InvalidArgumentException
     {
         if (metadata.IsLinkedTo(source)) return;
 
-        throw new System.ArgumentException(
+        throw new ArgumentException(
             $"\n{source.GetType()} is not linked to:'{metadata.GetType()}';\n");
     }
 }
