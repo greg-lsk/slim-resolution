@@ -1,30 +1,23 @@
-﻿using SlimResolution.Core.ResolutionSourceProcessing;
-using SlimResolution.Core.ServiceProviderAbstractions;
+﻿using SlimResolution.Core.ServiceProviderAbstractions;
 using SlimResolution.Core.ServiceProviderAbstractions.Internals;
 
 
 namespace SlimResolution.Core.ResolutionComposition.Internals;
 
-internal class Composer<T> : IComposer<T> where T : struct
+internal class Composer<T> : IComposer<T>, IFromSourceComposer<T> where T : struct
 {
     private readonly ResolutionSource _resolutionSource;
-
-    internal IResolutionMetadata<T> Metadata { get; }
-    public CreateResolutionSource ResolutionSourceFactory { get; }
+    private readonly IResolutionMetadata<T> _metadata;
 
 
     public Composer(IResolutionMetadata<T> metadata,
-                    ICompositionRootServiceProvider rootProvider,
-                    IDelegateCreator delegateCreator)
+                    ICompositionRootServiceProvider rootProvider)
     {
-        var factory = delegateCreator.Create<CreateResolutionSource>();
-
-        _resolutionSource = factory(rootProvider.Provider);
-        
-        ResolutionSourceFactory = factory;
-        Metadata = metadata;
+        _metadata = metadata;
+        _resolutionSource = ResolutionSource.Create(rootProvider.Provider);
     }
 
 
-    public T Compose() => Metadata.Materialize(_resolutionSource);
+    T IComposer<T>.Compose() => _metadata.Materialize(_resolutionSource);
+    T IFromSourceComposer<T>.Compose(ResolutionSource source) => _metadata.Materialize(source);
 }

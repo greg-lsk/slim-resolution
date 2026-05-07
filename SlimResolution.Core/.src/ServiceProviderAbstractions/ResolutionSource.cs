@@ -9,4 +9,5 @@ public readonly struct ResolutionSource
     {
         _source = source;
     }
+    internal static ResolutionSource Create(object source) => new(source);
 }

@@ -9,6 +9,7 @@
   <ItemGroup>
     <Compile Include=".src\.ErrorHandling\StaticThrowHelpers\InvalidArgumentException.cs" />
     <Compile Include=".src\ResolutionComposition\.Internals\Composer.cs" />
+    <Compile Include=".src\ResolutionComposition\.Internals\IFromSourceComposer.cs" />
     <Compile Include=".src\ServiceProviderAbstractions\.Internals\CompositionRootServiceProvider.cs" />
     <Compile Include=".src\ServiceProviderAbstractions\.Internals\ICompositionRootServiceProvider.cs" />
     <Compile Include=".src\ExtensionHelpers\ExtensionContext.cs" />

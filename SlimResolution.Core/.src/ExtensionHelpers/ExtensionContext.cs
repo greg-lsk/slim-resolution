@@ -1,6 +1,7 @@
-﻿using SlimResolution.Core.ServiceProviderAbstractions;
+﻿using System;
+
+using SlimResolution.Core.ServiceProviderAbstractions;
 using SlimResolution.Core.ResolutionComposition.Internals;
-using SlimResolution.Core.ErrorHandling.StaticThrowHelpers;
 
 
 namespace SlimResolution.Core.ExtensionHelpers;
@@ -10,14 +11,13 @@ public readonly struct ExtensionContext
     public static ExtensionContext Instance => new();
 
 
-    public TResolved Matarialize<TResolved>(IComposer<TResolved> composer, ResolutionSource source)
+    public TResolved TryResolve<TResolved>(IComposer<TResolved> composer, object externalSource)
         where TResolved : struct
     {
-        InvalidArgumentException.ThrowIfNotDefaultComposer(composer);
-
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-//Unreachable if composer is invalid — ThrowIfNotDefaultComposer already throws, so the cast is safe.
-        return (composer as Composer<TResolved>).Metadata.Materialize(source);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+        return composer switch
+        {
+            IFromSourceComposer<TResolved> validComposer => validComposer.Compose(ResolutionSource.Create(externalSource)),
+            _ => throw new ArgumentException("Invalid Composer")
+        };
     }
 }
