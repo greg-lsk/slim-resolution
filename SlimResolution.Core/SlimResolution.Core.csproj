@@ -20,7 +20,7 @@
     <Compile Include=".src\ResolutionComposition\.Core\IComposer.cs" />
     <Compile Include=".src\Metadata\.Core\IResolutionMetadata.cs" />
     <Compile Include=".src\.DependencyInjectionUtils\MetadataHandler.cs" />
-    <Compile Include=".src\.DependencyInjectionUtils\MetadataInfo.cs" />
+    <Compile Include=".src\.DependencyInjectionUtils\RegistrationInfo.cs" />
     <Compile Include=".src\.DependencyInjectionUtils\.Internals\PropertyInfoExtensions.cs" />
     <Compile Include=".src\.DependencyInjectionUtils\.Internals\ResolutionDelegateBuilder.cs" />
     <Compile Include=".src\.DependencyInjectionUtils\.Internals\TypeExtensions.cs" />

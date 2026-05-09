@@ -11,7 +11,7 @@ internal sealed class MetadataRegistrator<TProvider>(ResolveServiceFromType<TPro
     : RegistratorBase<TProvider>(resolveMetadataDependency, registerMetadata) 
     where TProvider : notnull
 {
-    public override void OnNext(MetadataInfo info)
+    public override void OnNext(RegistrationInfo info)
     {
         var propertyInfos = info.GetResolutionProperties();
 
@@ -36,11 +36,11 @@ internal sealed class MetadataRegistrator<TProvider>(ResolveServiceFromType<TPro
 
 
         ctorArgTypes.AddRange(resolutionDelegateTypes);
-        var ctorInfo = info.ConcreteType.GetConstructor([.. ctorArgTypes])
+        var ctorInfo = info.ConcreteMetadataType.GetConstructor([.. ctorArgTypes])
             ?? throw new MissingMethodException("ctor not found");
 
 
-        Register(info.InterfaceType, s =>
+        Register(info.AbstractMetadataType, s =>
         {
             ctorArgs.Add(ResolveFromType(s, typeof(IDelegateCreator)));
             ctorArgs.AddRange(resolutionDelegates);

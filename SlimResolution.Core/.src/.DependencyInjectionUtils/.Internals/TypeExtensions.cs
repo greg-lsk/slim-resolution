@@ -25,9 +25,9 @@ internal static class TypeExtensions
         return type.IsValueType || type.IsAbstract || type.IsInterface;
     }
 
-    internal static IEnumerable<MetadataInfo> FilterByMetadata(this IEnumerable<Type> types)
+    internal static IEnumerable<RegistrationInfo> FilterByMetadata(this IEnumerable<Type> types)
     {
-        List<MetadataInfo> typesList = [];
+        List<RegistrationInfo> typesList = [];
 
         foreach (var type in types)
         {
@@ -36,7 +36,7 @@ internal static class TypeExtensions
             var closedGenericInterfaceType = type.GetClosedGenericInterface(typeof(IResolutionMetadata<>));
             if (closedGenericInterfaceType is null) continue;
 
-            typesList.Add(MetadataInfo.Create(closedGenericInterfaceType, type));
+            typesList.Add(RegistrationInfo.Create(closedGenericInterfaceType, type));
         }
 
         return typesList;

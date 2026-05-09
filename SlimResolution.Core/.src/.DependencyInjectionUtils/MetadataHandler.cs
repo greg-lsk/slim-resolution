@@ -5,7 +5,7 @@ using SlimResolution.Core.DependencyInjectionUtils.Internals;
 
 namespace SlimResolution.Core.DependencyInjectionUtils;
 
-public class MetadataHandler : IObservable<MetadataInfo>
+public class MetadataHandler : IObservable<RegistrationInfo>
 {
     private readonly string[] _metadataHostAssemblyNames;
 
@@ -36,7 +36,7 @@ public class MetadataHandler : IObservable<MetadataInfo>
         }
     }
 
-    public Unsubscribe Subscribe(System.IObserver<MetadataInfo> observer)
+    public Unsubscribe Subscribe(System.IObserver<RegistrationInfo> observer)
     {
         OnMetadataTypeHit += observer.OnNext;
 

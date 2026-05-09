@@ -13,4 +13,4 @@ public delegate void RegisterService<TProvider>(Type serviceAbstractType, Resolv
     where TProvider : notnull;
 
 
-public delegate void HandleMetadataInfo(MetadataInfo metadataInfo);
+public delegate void HandleMetadataInfo(RegistrationInfo metadataInfo);
