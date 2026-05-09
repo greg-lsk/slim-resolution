@@ -11,6 +11,3 @@ public delegate object ResolveServiceFromType<TProvider>(TProvider provider, Typ
 
 public delegate void RegisterService<TProvider>(Type serviceAbstractType, ResolveService<TProvider> resolveService) 
     where TProvider : notnull;
-
-
-public delegate void HandleMetadataInfo(RegistrationInfo metadataInfo);

@@ -1,6 +1,11 @@
-﻿namespace SlimResolution.Core.DependencyInjectionUtils.Internals;
+﻿using System;
 
-internal abstract class RegistratorBase<TProvider> : System.IObserver<RegistrationInfo>
+using SlimResolution.Core.IObservableUtils;
+
+
+namespace SlimResolution.Core.DependencyInjectionUtils.Internals;
+
+internal abstract class RegistratorBase<TProvider> : IObserver<RegistrationInfo>
     where TProvider : notnull
 {
     protected Unsubscribe? UnsubscribeCallback { get; private set; }
@@ -17,7 +22,7 @@ internal abstract class RegistratorBase<TProvider> : System.IObserver<Registrati
     }
 
 
-    public void RegisterTo(IObservable<RegistrationInfo> observable)
+    public void RegisterTo(Observable<RegistrationInfo> observable)
     {
         UnsubscribeCallback = observable.Subscribe(this);
     }
@@ -26,5 +31,5 @@ internal abstract class RegistratorBase<TProvider> : System.IObserver<Registrati
 
     public void OnCompleted() => UnsubscribeCallback?.Invoke();
     
-    public void OnError(System.Exception error) { }
+    public void OnError(Exception error) { }
 }

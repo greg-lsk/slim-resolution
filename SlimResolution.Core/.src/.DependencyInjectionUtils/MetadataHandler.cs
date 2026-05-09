@@ -1,24 +1,26 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
+using SlimResolution.Core.IObservableUtils;
 using SlimResolution.Core.DependencyInjectionUtils.Internals;
 
 
 namespace SlimResolution.Core.DependencyInjectionUtils;
 
-public class MetadataHandler : IObservable<RegistrationInfo>
+public sealed class MetadataHandler : Observable<RegistrationInfo>
 {
     private readonly string[] _metadataHostAssemblyNames;
 
-    public event HandleMetadataInfo? OnMetadataTypeHit;
-
     
-    private MetadataHandler(string[] metadataHostAssemblyNames)
+    public MetadataHandler(string[] metadataHostAssemblyNames,
+                           IObserverCollection<IObserver<RegistrationInfo>> observers) : base(observers)
     {
         _metadataHostAssemblyNames = metadataHostAssemblyNames;
     }
-    public static MetadataHandler Create(string[] metadataHostAssemblyNames)
+    public static MetadataHandler Create(string[] metadataHostAssemblyNames,
+                                         IObserverCollection<IObserver<RegistrationInfo>> observers)
     {
-        return new(metadataHostAssemblyNames);
+        return new(metadataHostAssemblyNames, observers);
     }
 
 
@@ -28,18 +30,12 @@ public class MetadataHandler : IObservable<RegistrationInfo>
         {
             var assembly = Assembly.LoadFrom(assemblyName);
 
-            if (OnMetadataTypeHit is null) break;
-
-            assembly.GetTypes()
-                    .FilterByMetadata()
-                    .OnEach(OnMetadataTypeHit);
+            Observers.OnEach(o =>
+            {
+                assembly.GetTypes()
+                        .FilterByMetadata()
+                        .OnEach(o.OnNext);
+            });
         }
-    }
-
-    public Unsubscribe Subscribe(System.IObserver<RegistrationInfo> observer)
-    {
-        OnMetadataTypeHit += observer.OnNext;
-
-        return () => OnMetadataTypeHit -= observer.OnNext;
     }
 }
