@@ -21,7 +21,6 @@ internal readonly partial struct EvaluationLogging
                                ResolutionSource resolutionSource)
     {
         InvalidArgumentException.ThrowIfNotBound<EvaluationLogging, EvaluationLoggingMetadata>(metadata);
-        InvalidArgumentException.ThrowIfUnlinked(resolutionSource, metadata);
 
         _resolutionMetadata = metadata;
         _resolutionSource = resolutionSource;

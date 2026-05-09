@@ -1,6 +1,5 @@
 ﻿using SlimResolution.Core;
 using SlimResolution.Core.Metadata;
-using SlimResolution.Core.MetadataRegistration;
 using SlimResolution.Core.ErrorHandling;
 using SlimResolution.Core.ResolutionSourceProcessing;
 using SlimResolution.Core.ServiceProviderAbstractions;
@@ -13,9 +12,8 @@ internal class EvaluationLoggingMetadata : ResolutionMetadataBase, IResolutionMe
     private Resolution<IPseudoLog> _loggerResolution { get; }
 
 
-    public EvaluationLoggingMetadata(ValidateResolutionSource sourceValidation,
-                                     IDelegateCreator delegateCreator,
-                                     Resolution<IPseudoLog> loggerResolution) : base(sourceValidation, delegateCreator)
+    public EvaluationLoggingMetadata(IDelegateCreator delegateCreator,
+                                     Resolution<IPseudoLog> loggerResolution) : base(delegateCreator)
     {
         _loggerResolution = loggerResolution;
     }

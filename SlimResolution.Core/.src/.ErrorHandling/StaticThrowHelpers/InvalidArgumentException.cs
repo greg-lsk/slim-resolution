@@ -30,12 +30,12 @@ public static class InvalidArgumentException
     }
 
 
-    public static void ThrowIfUnlinked<TTarget>(ResolutionSource source, IResolutionMetadata<TTarget> metadata)
-        where TTarget : struct
-    {
-        if (metadata.IsLinkedTo(source)) return;
+    //public static void ThrowIfUnlinked<TTarget>(ResolutionSource source, IResolutionMetadata<TTarget> metadata)
+    //    where TTarget : struct
+    //{
+    //    if (metadata.IsLinkedTo(source)) return;
 
-        throw new ArgumentException(
-            $"\n{source.GetType()} is not linked to:'{metadata.GetType()}';\n");
-    }
+    //    throw new ArgumentException(
+    //        $"\n{source.GetType()} is not linked to:'{metadata.GetType()}';\n");
+    //}
 }
