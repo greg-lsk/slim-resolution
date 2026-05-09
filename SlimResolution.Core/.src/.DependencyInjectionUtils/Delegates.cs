@@ -3,9 +3,14 @@
 
 namespace SlimResolution.Core.DependencyInjectionUtils;
 
-public delegate object InstantiateMetadata(object resolutionSource);
-public delegate void RegisterMetadata(Type metadataInterfaceType, InstantiateMetadata instantiateMetadata);
+public delegate object ResolveService<TProvider>(TProvider provider) 
+    where TProvider : notnull;
 
-public delegate object ResolveMetadataDependency(Type metadataDependencyType, object resolutionSource);
+public delegate object ResolveServiceFromType<TProvider>(TProvider provider, Type serviceAbstractType)
+    where TProvider : notnull;
+
+public delegate void RegisterService<TProvider>(Type serviceAbstractType, ResolveService<TProvider> resolveService) 
+    where TProvider : notnull;
+
 
 public delegate void HandleMetadataInfo(MetadataInfo metadataInfo);

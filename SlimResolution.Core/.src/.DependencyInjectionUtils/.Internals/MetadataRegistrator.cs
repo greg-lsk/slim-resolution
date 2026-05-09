@@ -6,9 +6,10 @@ using SlimResolution.Core.ResolutionSourceProcessing;
 
 namespace SlimResolution.Core.DependencyInjectionUtils.Internals;
 
-internal sealed class MetadataRegistrator(ResolveMetadataDependency resolveMetadataDependency,
-                                        RegisterMetadata registerMetadata) 
-    : RegistratorBase(resolveMetadataDependency, registerMetadata)
+internal sealed class MetadataRegistrator<TProvider>(ResolveServiceFromType<TProvider> resolveMetadataDependency,
+                                                     RegisterService<TProvider> registerMetadata) 
+    : RegistratorBase<TProvider>(resolveMetadataDependency, registerMetadata) 
+    where TProvider : notnull
 {
     public override void OnNext(MetadataInfo info)
     {
@@ -18,7 +19,7 @@ internal sealed class MetadataRegistrator(ResolveMetadataDependency resolveMetad
         List<object> ctorArgs = [];
 
 
-        var delegateBuilder = ResolutionDelegateBuilder.Instance;
+        var delegateBuilder = ResolutionDelegateBuilder<TProvider>.Instance;
 
         List<Type> resolutionDelegateTypes = [];
         List<object> resolutionDelegates = [];
@@ -29,7 +30,7 @@ internal sealed class MetadataRegistrator(ResolveMetadataDependency resolveMetad
 
             resolutionDelegateTypes.Add(propertyInfo.PropertyType);
 
-            var resolutionDelegate = delegateBuilder.BuildDelegate(propertyInfo.PropertyType, ResolveMetadataDependency);
+            var resolutionDelegate = delegateBuilder.BuildDelegate(propertyInfo.PropertyType, ResolveFromType);
             resolutionDelegates.Add(resolutionDelegate);
         }
 
@@ -39,9 +40,9 @@ internal sealed class MetadataRegistrator(ResolveMetadataDependency resolveMetad
             ?? throw new MissingMethodException("ctor not found");
 
 
-        RegisterMetadata(info.InterfaceType, s =>
+        Register(info.InterfaceType, s =>
         {
-            ctorArgs.Add(ResolveMetadataDependency(typeof(IDelegateCreator), s));
+            ctorArgs.Add(ResolveFromType(s, typeof(IDelegateCreator)));
             ctorArgs.AddRange(resolutionDelegates);
 
             return ctorInfo.Invoke([.. ctorArgs]);

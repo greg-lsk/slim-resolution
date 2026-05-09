@@ -1,18 +1,19 @@
 ﻿namespace SlimResolution.Core.DependencyInjectionUtils.Internals;
 
-internal abstract class RegistratorBase : System.IObserver<MetadataInfo>
+internal abstract class RegistratorBase<TProvider> : System.IObserver<MetadataInfo>
+    where TProvider : notnull
 {
     protected Unsubscibe? UnsubscibeCallback { get; private set; }
 
-    protected ResolveMetadataDependency ResolveMetadataDependency { get; }
-    protected RegisterMetadata RegisterMetadata { get; }
+    protected ResolveServiceFromType<TProvider> ResolveFromType { get; }
+    protected RegisterService<TProvider> Register { get; }
 
 
-    protected RegistratorBase(ResolveMetadataDependency resolveMetadataDependency,
-                              RegisterMetadata registerMetadata)
+    protected RegistratorBase(ResolveServiceFromType<TProvider> resolveMetadataDependency,
+                              RegisterService<TProvider> registerMetadata)
     {
-        ResolveMetadataDependency = resolveMetadataDependency;
-        RegisterMetadata = registerMetadata;
+        ResolveFromType = resolveMetadataDependency;
+        Register = registerMetadata;
     }
 
 

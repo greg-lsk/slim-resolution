@@ -5,9 +5,10 @@ using SlimResolution.Core.ResolutionComposition.Internals;
 
 namespace SlimResolution.Core.DependencyInjectionUtils.Internals;
 
-internal sealed class ComposerRegistrator<TProvider>(ResolveMetadataDependency resolveMetadataDependency,
-                                                   RegisterMetadata registerMetadata) 
-    : RegistratorBase(resolveMetadataDependency, registerMetadata)
+internal sealed class ComposerRegistrator<TProvider>(ResolveServiceFromType<TProvider> resolveFromType,
+                                                     RegisterService<TProvider> register) 
+    : RegistratorBase<TProvider>(resolveFromType, register)
+    where TProvider : notnull
 {
     public override void OnNext(MetadataInfo info)
     {
@@ -25,11 +26,11 @@ internal sealed class ComposerRegistrator<TProvider>(ResolveMetadataDependency r
             abstractMetadataType
         ]) ?? throw new Exception("Ctor not found");
 
-        RegisterMetadata(abstractComposerType, p => ctor.Invoke(
+        Register(abstractComposerType, p => ctor.Invoke(
         [
             p,
             (ValidateResolutionSource) (o => o is TProvider),
-            ResolveMetadataDependency(abstractMetadataType, p)
+            ResolveFromType(p, abstractMetadataType)
         ]));
     }
 }

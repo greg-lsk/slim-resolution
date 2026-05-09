@@ -20,7 +20,7 @@ public static class ServiceCollectionExtensions
         MetadataHandler.Create(metadataHostAssemblyNames)
                        .InitializeRegistrators<IServiceProvider>
                        (
-                            (s, o) => (o as IServiceProvider).GetService(s),
+                            (p, s) => p.GetService(s),
                             (i, f) => services.AddSingleton(i, provider => f(provider))
                        )
                        .Run();
