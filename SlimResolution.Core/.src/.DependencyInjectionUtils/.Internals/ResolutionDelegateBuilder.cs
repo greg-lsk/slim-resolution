@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 
 
-namespace SlimResolution.Core.MetadataRegistration.Internals;
+namespace SlimResolution.Core.DependencyInjectionUtils.Internals;
 
 internal readonly struct ResolutionDelegateBuilder
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-namespace SlimResolution.Core.MetadataRegistration.Internals;
+namespace SlimResolution.Core.DependencyInjectionUtils.Internals;
 
 internal static class MetadataInfoExtensions
 {

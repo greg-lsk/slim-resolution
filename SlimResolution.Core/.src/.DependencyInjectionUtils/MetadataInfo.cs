@@ -2,7 +2,7 @@
 using System.Reflection;
 
 
-namespace SlimResolution.Core.MetadataRegistration;
+namespace SlimResolution.Core.DependencyInjectionUtils;
 
 public readonly struct MetadataInfo
 {
