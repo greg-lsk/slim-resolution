@@ -36,7 +36,7 @@ public class MetadataHandler : IObservable<MetadataInfo>
         }
     }
 
-    public Unsubscibe Subscribe(System.IObserver<MetadataInfo> observer)
+    public Unsubscribe Subscribe(System.IObserver<MetadataInfo> observer)
     {
         OnMetadataTypeHit += observer.OnNext;
 

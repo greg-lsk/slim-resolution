@@ -1,8 +1,8 @@
 ﻿namespace SlimResolution.Core.DependencyInjectionUtils.Internals;
 
 
-public delegate void Unsubscibe();
+public delegate void Unsubscribe();
 public interface IObservable<out T>
 {
-    public Unsubscibe Subscribe(System.IObserver<T> observer);
+    public Unsubscribe Subscribe(System.IObserver<T> observer);
 }

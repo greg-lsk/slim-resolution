@@ -3,7 +3,7 @@
 internal abstract class RegistratorBase<TProvider> : System.IObserver<MetadataInfo>
     where TProvider : notnull
 {
-    protected Unsubscibe? UnsubscibeCallback { get; private set; }
+    protected Unsubscribe? UnsubscibeCallback { get; private set; }
 
     protected ResolveServiceFromType<TProvider> ResolveFromType { get; }
     protected RegisterService<TProvider> Register { get; }
