@@ -4,9 +4,9 @@ using System.Reflection;
 using SlimResolution.Core.ResolutionComposition.Internals;
 
 
-namespace SlimResolution.Core.DependencyInjectionUtils;
+namespace SlimResolution.Core.MetadataTypeDiscovery.Internals;
 
-public readonly struct RegistrationInfo
+internal readonly struct RegistrationInfo
 {
     private readonly BindingFlags Binding => BindingFlags.Public
                                              | BindingFlags.NonPublic

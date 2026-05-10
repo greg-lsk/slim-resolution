@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using SlimResolution.Core.ResolutionSourceProcessing;
+using SlimResolution.Core.MetadataTypeDiscovery.Internals;
 
 
 namespace SlimResolution.Core.DependencyInjectionUtils.Internals;

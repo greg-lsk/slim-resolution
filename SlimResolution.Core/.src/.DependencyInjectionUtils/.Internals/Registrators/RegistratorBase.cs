@@ -1,6 +1,7 @@
 ﻿using System;
 
 using SlimResolution.Core.IObservableUtils;
+using SlimResolution.Core.MetadataTypeDiscovery.Internals;
 
 
 namespace SlimResolution.Core.DependencyInjectionUtils.Internals;

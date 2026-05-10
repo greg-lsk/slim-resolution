@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace SlimResolution.Core.DependencyInjectionUtils.Internals;
+namespace SlimResolution.Core.MetadataTypeDiscovery.Internals;
 
 internal static class TypeExtensions
 {

@@ -1,6 +1,9 @@
 ﻿using System;
 
 
+using SlimResolution.Core.MetadataTypeDiscovery.Internals;
+
+
 namespace SlimResolution.Core.DependencyInjectionUtils.Internals;
 
 internal sealed class ComposerRegistrator<TProvider>(ResolveServiceFromType<TProvider> resolveFromType,

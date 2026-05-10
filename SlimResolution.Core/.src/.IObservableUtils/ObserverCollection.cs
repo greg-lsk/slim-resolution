@@ -1,12 +1,12 @@
 ﻿using System;
 
-using SlimResolution.Core.DependencyInjectionUtils;
+using SlimResolution.Core.MetadataTypeDiscovery.Internals;
 using SlimResolution.Core.DependencyInjectionUtils.Internals;
 
 
 namespace SlimResolution.Core.IObservableUtils;
 
-public class ObserverCollection<TProvider> : IObserverCollection<IObserver<RegistrationInfo>>
+internal class ObserverCollection<TProvider> : IObserverCollection<IObserver<RegistrationInfo>>
     where TProvider : notnull
 {
     private readonly IObserver<RegistrationInfo>?[] _observers = new IObserver<RegistrationInfo>?[2];

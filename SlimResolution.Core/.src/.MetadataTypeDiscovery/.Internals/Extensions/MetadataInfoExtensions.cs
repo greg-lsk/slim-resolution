@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
 
-namespace SlimResolution.Core.DependencyInjectionUtils.Internals;
+namespace SlimResolution.Core.MetadataTypeDiscovery.Internals;
 
 internal static class MetadataInfoExtensions
 {
     internal static void OnEach(this IEnumerable<RegistrationInfo> metadataInfos,
-                                HandleMetadataInfo handle)
+                                HandleRegistrationInfo handle)
     {
         foreach (var metadataInfo in metadataInfos) handle(metadataInfo);
     }

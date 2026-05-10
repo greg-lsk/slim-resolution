@@ -7,9 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include=".src\.DependencyInjectionUtils\.Internals\Delegates.cs" />
+    <Compile Include=".src\.MetadataTypeDiscovery\.Internals\Delegates.cs" />
     <Compile Include=".src\.ErrorHandling\StaticThrowHelpers\InvalidArgumentException.cs" />
-    <Compile Include=".src\.DependencyInjectionUtils\MetadataHandlerExtensions.cs" />
     <Compile Include=".src\.DependencyInjectionUtils\.Internals\Registrators\RegistratorBase.cs" />
     <Compile Include=".src\.DependencyInjectionUtils\.Internals\Registrators\MetadataRegistrator.cs" />
     <Compile Include=".src\.IObservableUtils\.extern\IObservableBase.cs" />
@@ -17,6 +16,9 @@
     <Compile Include=".src\.IObservableUtils\.extern\ObservableBase.cs" />
     <Compile Include=".src\.IObservableUtils\Observable.cs" />
     <Compile Include=".src\.IObservableUtils\ObserverCollection.cs" />
+    <Compile Include=".src\.MetadataTypeDiscovery\.Internals\MetadataAssemblyScanner.cs" />
+    <Compile Include=".src\.MetadataTypeDiscovery\Factory.cs" />
+    <Compile Include=".src\.MetadataTypeDiscovery\IMetadataTypeLocator.cs" />
     <Compile Include=".src\ResolutionComposition\.Core\Delegates.cs" />
     <Compile Include=".src\ResolutionComposition\.Internals\Composer.cs" />
     <Compile Include=".src\ResolutionComposition\.Internals\IFromSourceComposer.cs" />
@@ -24,12 +26,12 @@
     <Compile Include=".src\ExtensionHelpers\ExtensionContext.cs" />
     <Compile Include=".src\ResolutionComposition\.Core\IComposer.cs" />
     <Compile Include=".src\Metadata\.Core\IResolutionMetadata.cs" />
-    <Compile Include=".src\.DependencyInjectionUtils\MetadataHandler.cs" />
-    <Compile Include=".src\.DependencyInjectionUtils\RegistrationInfo.cs" />
+    <Compile Include=".src\.DependencyInjectionUtils\.Internals\RegistratorMonitor.cs" />
+    <Compile Include=".src\.MetadataTypeDiscovery\.Internals\RegistrationInfo.cs" />
     <Compile Include=".src\.DependencyInjectionUtils\.Internals\Extensions\PropertyInfoExtensions.cs" />
     <Compile Include=".src\.DependencyInjectionUtils\.Internals\ResolutionDelegateBuilder.cs" />
-    <Compile Include=".src\.DependencyInjectionUtils\.Internals\Extensions\TypeExtensions.cs" />
-    <Compile Include=".src\.DependencyInjectionUtils\.Internals\Extensions\MetadataInfoExtensions.cs" />
+    <Compile Include=".src\.MetadataTypeDiscovery\.Internals\Extensions\TypeExtensions.cs" />
+    <Compile Include=".src\.MetadataTypeDiscovery\.Internals\Extensions\MetadataInfoExtensions.cs" />
     <Compile Include=".src\.DependencyInjectionUtils\Delegates.cs" />
     <Compile Include=".src\Metadata\.Core\Delegates.cs" />
     <Compile Include=".src\Metadata\ResolutionMetadataBase.cs" />
