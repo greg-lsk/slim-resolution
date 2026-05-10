@@ -1,11 +1,9 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 
-
 using SlimResolution.Core.ExtensionHelpers;
-using SlimResolution.Core.DependencyInjectionUtils;
+using SlimResolution.Core.MetadataTypeDiscovery;
 using SlimResolution.Core.ResolutionSourceProcessing.DependencyInjection;
-using SlimResolution.Core.IObservableUtils;
 
 
 namespace SlimResolution.Extensions.MicrosoftDI;
@@ -18,13 +16,13 @@ public static class ServiceCollectionExtensions
         var extensionContext = ExtensionContext.Instance;
         extensionContext.RegisterSourceProcessingEssentials((t1, t2) => services.AddTransient(t1, t2));
 
-        MetadataHandler.Create(metadataHostAssemblyNames, ObserverCollection<IServiceProvider>.Instance)
-                       .InitializeRegistrators<IServiceProvider>
-                       (
-                            (p, s) => p.GetService(s),
-                            (i, f) => services.AddSingleton(i, provider => f(provider))
-                       )
-                       .Run();
+        Factory.Create(metadataHostAssemblyNames)
+               .Configure<IServiceProvider>
+               (
+                    (p, s) => p.GetService(s),
+                    (i, f) => services.AddSingleton(i, provider => f(provider))
+               )
+               .Run();
 
         return services;
     }
